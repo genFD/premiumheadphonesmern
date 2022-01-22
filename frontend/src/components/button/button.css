@@ -1,0 +1,22 @@
+.btn {
+  color: var(--green);
+  border: 1px solid var(--green);
+  padding: 1rem 2rem;
+  text-decoration: none;
+  background: var(--dark-navy);
+  border-radius: var(--bradius);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+  font-family: var(--bodyFont);
+  transition: 0.5s;
+  cursor: pointer;
+}
+.btn:hover {
+  top: 0;
+  color: var(--dark-navy);
+  background: var(--green);
+}
+.btn:active {
+  transform: scale(0.78);
+}

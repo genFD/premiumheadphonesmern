@@ -1,0 +1,9 @@
+.products {
+  height: 120vh;
+  border: 1px solid var(--green);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+}
+.test {
+  border: 1px solid var(--green);
+}

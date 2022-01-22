@@ -1,0 +1,29 @@
+.close-btn {
+  position: absolute;
+  top: 0rem;
+  right: 1rem;
+  margin-top: 1rem;
+  font-size: 2rem;
+  background: transparent;
+  border: transparent;
+  -webkit-transition: var(--transition);
+  transition: var(--transition);
+  color: var(--green);
+  cursor: pointer;
+}
+.close-btn:hover {
+  color: var(--red-dark);
+}
+.close-btn:active {
+  transform: rotate(-765deg) translateY(5.5px);
+}
+.close-btn-container {
+  margin: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 1px solid var(--green);
+  background: var(--dark-navy);
+  height: 4rem;
+  width: 100%;
+}

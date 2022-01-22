@@ -1,0 +1,6 @@
+.footer {
+  padding-bottom: 2rem;
+  background: var(--dark-navy);
+  display: grid;
+  place-items: center;
+}
