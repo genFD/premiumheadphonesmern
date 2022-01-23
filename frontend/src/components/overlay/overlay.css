@@ -1,0 +1,15 @@
+.overlay {
+  position: fixed;
+  /* height: 100vh; */
+  background: rgba(0, 0, 0, 0.6);
+  /* background: red; */
+  width: 100%;
+  backdrop-filter: blur(2px);
+  /* top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0; */
+  /* inset: 20px 40px 60px 100px; */
+  inset: 0;
+  transition: all 1s ease-in-out;
+}

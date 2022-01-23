@@ -5,8 +5,8 @@ const ProductsList = () => {
   return (
     <main>
       <div className='products section-center'>
-        <div className='test'></div>
-        <div className='test'></div>
+        <div className='test test1'></div>
+        <div className='test test2'></div>
         <div className='test'></div>
         <div className='test'></div>
         <div className='test'></div>

@@ -15,6 +15,7 @@ import './Navbar.css';
 import Button from '../button/Button';
 import Socials from '../social-icons/Socials';
 import CloseButton from '../Close-btn/CloseButton';
+import Overlay from '../overlay/Overlay';
 
 const Navbar = () => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
@@ -33,6 +34,8 @@ const Navbar = () => {
   });
   return (
     <>
+      {cartDrawerIsOpen ? <Overlay /> : null}
+      {drawerIsOpen ? <Overlay /> : null}
       <nav className={`nav ${fixedNavbar ? 'active' : null}`}>
         <div className='nav-center'>
           <div className='nav-header'>
@@ -59,10 +62,14 @@ const Navbar = () => {
                 <Link to='/'>Shop</Link>
               </li>
               <li>
-                <Link to='/about'>about</Link>
+                <Link to='/about' className='menu-link'>
+                  about
+                </Link>
               </li>
               <li>
-                <Link to='/contact'>contact</Link>
+                <Link to='/contact' className='menu-link'>
+                  contact
+                </Link>
               </li>
             </ul>
             <button

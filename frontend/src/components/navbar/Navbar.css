@@ -1,6 +1,9 @@
 .nav-links {
   display: none;
 }
+.blur {
+  backdrop-filter: blur(20px);
+}
 .nav {
   height: 5rem;
   padding: 1rem;
@@ -135,7 +138,7 @@
   position: fixed;
   top: 0;
   right: 0;
-  width: 200px;
+  width: 250px;
   height: 100%;
   background: var(--light-navy);
   display: grid;
@@ -160,6 +163,7 @@
   display: inline-block;
   margin-bottom: 3.5rem;
   transition: var(--transition);
+  position: relative;
 }
 .side-drawer-menu-links a:hover {
   border-left: 1px solid var(--green);
