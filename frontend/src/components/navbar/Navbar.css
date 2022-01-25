@@ -12,10 +12,15 @@
   align-items: center;
   -webkit-transition: var(--transition);
   transition: var(--transition);
+  z-index: 1000;
 }
 .nav.active {
   background: var(--dark-navy);
-  backdrop-filter: blur(100px);
+
+  background: var(--white);
+  background: rgba(var(--light-navy), 0.2);
+  backdrop-filter: blur(20px);
+  /* backdrop-filter: transparent; */
   position: fixed;
   top: 0;
   left: 0;
@@ -123,6 +128,7 @@
   place-items: center;
   transition: var(--transition);
   transform: translateX(-300%);
+  z-index: 1000;
 }
 .side-drawer-menu div {
   display: flex;
@@ -145,6 +151,7 @@
   place-items: center;
   transition: var(--transition);
   transform: translateX(100%);
+  z-index: 1000;
 }
 .side-drawershoppingcart-open {
   transform: translateX(0);

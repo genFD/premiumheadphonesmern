@@ -1,0 +1,82 @@
+.order {
+  /* border: 1px solid red; */
+}
+
+.order-summary-info-container {
+  display: grid;
+  /* place-items: center; */
+  /* border: 1px solid red; */
+}
+.items {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 1rem;
+  /* border: 1px solid green; */
+  place-items: center;
+  padding-bottom: 20px;
+  /* margin-top: 20px; */
+
+  /* margin-bottom: 40px; */
+  /* width: 300px; */
+}
+.items-display {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  justify-self: start;
+  /* border: 1px solid lightcoral; */
+  gap: 20px;
+  position: relative;
+  z-index: -1000;
+}
+.items-display span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid red;
+  color: aliceblue;
+  background: red;
+  border-radius: 50%;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 10px;
+  position: absolute;
+  top: -1rem;
+  right: 5.85rem;
+}
+.items img {
+  width: 6rem;
+  height: 6rem;
+  object-fit: cover;
+}
+.items-name {
+}
+.items-price {
+  justify-self: end;
+}
+.subtotal {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.shipping {
+  display: flex;
+  justify-content: space-between;
+}
+.taxes {
+  display: flex;
+  justify-content: space-between;
+  /* margin-bottom: 30px; */
+}
+.total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.divider {
+  height: 1px;
+  width: 90%;
+  background: var(--green);
+  margin: 0 auto;
+}

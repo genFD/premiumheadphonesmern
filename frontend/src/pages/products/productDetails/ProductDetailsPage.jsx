@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import { HiSpeakerphone } from 'react-icons/hi';
-import { assets } from '../../assets/assets';
-import Button from '../../components/button/Button';
-import Overlay from '../../components/overlay/Overlay';
+import { assets } from '../../../assets/assets';
+import Button from '../../../components/button/Button';
+
 import './productdetails.css';
 
 const ProductDetailsPage = () => {
@@ -33,7 +33,7 @@ const ProductDetailsPage = () => {
           </div>
 
           <div className='guarantee'>
-            <HiSpeakerphone />
+            <HiSpeakerphone style={{ marginRight: 5 }} />
             <p>30 day Guarantee</p>
             <span className='divider'></span>
             <p>1 Year guarantee</p>
