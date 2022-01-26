@@ -3,4 +3,5 @@
   background: var(--dark-navy);
   display: grid;
   place-items: center;
+  width: 100%;
 }

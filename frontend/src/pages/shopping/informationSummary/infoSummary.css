@@ -1,0 +1,28 @@
+.container-info-summary {
+  border: 1px solid var(--slate);
+  padding: 1rem;
+  margin-bottom: 30px;
+}
+
+.container-info-summary button {
+  border: none;
+  background: transparent;
+  color: white;
+  font-family: var(--bodyFont);
+}
+.info-summary {
+  margin-top: 10px;
+}
+.info-summary-header {
+  display: flex;
+  justify-content: space-between;
+}
+.info-summary-title {
+  color: var(--dark-slate);
+}
+.info-summary-divider {
+  height: 1px;
+  width: 25rem;
+  background: var(--dark-slate);
+  margin: 0 auto;
+}

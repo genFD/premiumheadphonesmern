@@ -77,6 +77,6 @@
 .divider {
   height: 1px;
   width: 90%;
-  background: var(--green);
+  background: var(--dark-slate);
   margin: 0 auto;
 }

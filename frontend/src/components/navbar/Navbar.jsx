@@ -111,7 +111,7 @@ const Navbar = () => {
         <CloseButton>
           <FaTimes onClick={() => setCartDrawerIsOpen(!cartDrawerIsOpen)} />
         </CloseButton>
-        <Button>Shop Now</Button>
+        <Button>Secure checkout</Button>
       </aside>
     </>
   );
