@@ -9,6 +9,10 @@
   background: transparent;
   color: white;
   font-family: var(--bodyFont);
+  cursor: pointer;
+}
+.container-info-summary button:hover {
+  color: var(--green);
 }
 .info-summary {
   margin-top: 10px;

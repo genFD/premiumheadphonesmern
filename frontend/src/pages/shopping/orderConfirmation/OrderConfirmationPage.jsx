@@ -5,8 +5,10 @@ import { ImCheckboxChecked } from 'react-icons/im';
 import ExpressCheckout from '../expressCheckout/ExpressCheckout';
 import InfoSummary from '../informationSummary/InfoSummary';
 import './orderConfirmation.css';
+import Navbar from '../../../components/navbar/Navbar';
+import Footer from '../../../components/footer/Footer';
 
-const OrderConfirmation = () => {
+const OrderConfirmationPage = () => {
   const [showInfo, setShowInfo] = useState(false);
   let w = window.innerWidth;
   const orderDisplayer = () => {
@@ -33,6 +35,7 @@ const OrderConfirmation = () => {
 
   return (
     <>
+      <Navbar />
       <div className='section-center shipping-center'>
         <div className='container-checkout-shipping-info'>
           <InfoSummary />
@@ -64,8 +67,9 @@ const OrderConfirmation = () => {
           <TransitionOrder showInfo={showInfo} />
         ) : null}
       </div>
+      <Footer />
     </>
   );
 };
 
-export default OrderConfirmation;
+export default OrderConfirmationPage;

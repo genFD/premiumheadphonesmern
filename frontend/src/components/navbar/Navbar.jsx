@@ -55,7 +55,9 @@ const Navbar = () => {
               </svg>
             </button>
             <div className='brand'>
-              <h1>Premium</h1>
+              <Link to='/'>
+                <h1>Premium</h1>
+              </Link>
             </div>
             <ul className='nav-links'>
               <li>

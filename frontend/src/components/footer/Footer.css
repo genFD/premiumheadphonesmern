@@ -1,7 +1,10 @@
 .footer {
-  padding-bottom: 2rem;
+  /* padding-bottom: 1rem; */
   background: var(--dark-navy);
   display: grid;
   place-items: center;
-  width: 100%;
+  width: 100vw;
+  /* z-index: -1; */
+  /* position: absolute;
+  bottom: 0; */
 }

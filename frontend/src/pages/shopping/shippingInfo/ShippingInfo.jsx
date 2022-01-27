@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { assets } from '../../../assets/assets';
 import Button from '../../../components/button/Button';
 import './shippingInfo.css';
@@ -12,7 +13,6 @@ const ShippingInfo = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phone, setPhone] = useState('');
-  const [orderSummary, setOrderSummary] = useState(false);
 
   return (
     <div className='shipping-information-container'>
@@ -185,7 +185,9 @@ const ShippingInfo = () => {
               </label>
             </div>
           </div>
-          <Button type='submit'>Continue to payment</Button>
+          <Link to='/payment'>
+            <Button type='submit'>Continue to payment</Button>
+          </Link>
         </form>
       </div>
     </div>

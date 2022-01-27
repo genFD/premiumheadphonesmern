@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 import Button from '../../../components/button/Button';
+import Footer from '../../../components/footer/Footer';
+import Navbar from '../../../components/navbar/Navbar';
 import ExpressCheckout from '../expressCheckout/ExpressCheckout';
 import { Order, TransitionOrder } from '../orderSummary/Order';
 import ShippingInfo from '../shippingInfo/ShippingInfo';
@@ -33,9 +35,9 @@ const InformationPage = () => {
 
   return (
     <>
+      <Navbar />
       <div className='section-center shipping-center'>
         <div className='container-checkout-shipping-info'>
-          <ExpressCheckout />
           <div className='shipping-info'>
             <ShippingInfo />
           </div>
@@ -58,6 +60,7 @@ const InformationPage = () => {
           <TransitionOrder showInfo={showInfo} />
         ) : null}
       </div>
+      <Footer />
     </>
   );
 };
