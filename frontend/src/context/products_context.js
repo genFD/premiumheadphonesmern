@@ -4,16 +4,10 @@ import {
   SIDE_DRAWER_OPEN,
   CART_DRAWER_CLOSE,
   CART_DRAWER_OPEN,
-} from '../constants/productConstants';
-import {
-  productsListReducer,
-  productDetailsReducer,
-  productDeleteReducer,
-  productCreateReducer,
-  productUpdateReducer,
-  productReviewCreateReducer,
-  productTopRatedReducer,
-} from '../reducers/productReducers';
+} from '../actions';
+
+import reducer from '../reducers/productReducers';
+
 const { createContext } = React;
 
 const initialState = {
@@ -24,7 +18,7 @@ const initialState = {
 const ProductsContext = createContext();
 
 const ProductsProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(productsListReducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const openSideDrawer = () => {
     dispatch({ type: SIDE_DRAWER_OPEN });

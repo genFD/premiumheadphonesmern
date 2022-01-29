@@ -29,7 +29,27 @@ import {
   CART_DRAWER_OPEN,
 } from '../constants/productConstants';
 
-export const productsListReducer = (state, action) => {
+export const SideAndCartDrawerReducer = (state, action) => {
+  switch (action.type) {
+    case SIDE_DRAWER_OPEN: {
+      return { ...state, isSideDrawerOpen: true };
+    }
+    case SIDE_DRAWER_CLOSE: {
+      return { ...state, isSideDrawerOpen: false };
+    }
+    case CART_DRAWER_OPEN: {
+      return { ...state, isCartDrawerOpen: true };
+    }
+    case CART_DRAWER_CLOSE: {
+      return { ...state, isCartDrawerOpen: false };
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
+const productsListReducer = (state, action) => {
   switch (action.type) {
     case SIDE_DRAWER_OPEN: {
       return { ...state, isSideDrawerOpen: true };
@@ -148,3 +168,5 @@ export const productTopRatedReducer = (state = { products: [] }, action) => {
       return state;
   }
 };
+
+export default productsListReducer;

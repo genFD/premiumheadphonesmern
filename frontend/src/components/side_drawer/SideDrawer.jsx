@@ -47,6 +47,7 @@ const SideDrawer = () => {
 
   return (
     <SideDrawerContainer>
+      {isSideDrawerOpen ? <Overlay /> : null}
       <aside
         className={`${
           isSideDrawerOpen ? 'side-drawer show-side-drawer' : 'side-drawer'
@@ -136,7 +137,7 @@ const SideDrawerContainer = styled.div`
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 350px;
     height: 100%;
     background: var(--light-navy);
     transition: var(--transition);
