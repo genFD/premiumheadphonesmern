@@ -1,10 +1,7 @@
-.nav-links {
+/* .nav-links {
   display: none;
-}
-.blur {
-  backdrop-filter: blur(20px);
-}
-.nav {
+} */
+/* .nav {
   height: 5rem;
   padding: 1rem;
   display: grid;
@@ -13,10 +10,9 @@
   -webkit-transition: var(--transition);
   transition: var(--transition);
   z-index: 1000;
-}
+} */
 .nav.active {
-  /* background: var(--dark-navy); */
-
+  background: var(--dark-navy);
   background: var(--white);
   background: rgba(var(--light-navy), 0.2);
   backdrop-filter: blur(20px);
@@ -27,43 +23,30 @@
   box-shadow: var(--shadow-3);
   z-index: 500;
 }
-.nav-center {
+/* .nav-center {
   width: 100%;
   max-width: 1170px;
   margin: 0 auto;
-  /* border: 2px solid blue; */
-}
-.nav-header {
+  border: 2px solid blue;
+} */
+/* .nav-header {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   -webkit-box-align: center;
   align-items: center;
-  /* border: 2px solid pink; */
-}
-.nav-btn {
+  border: 2px solid pink;
+} */
+/* .nav-btn {
   border: transparent;
   background: transparent;
   cursor: pointer;
   width: fit-content;
-}
-.nav-btn:active {
+} */
+/* .nav-btn:active {
   transform: scale(0.78);
-}
+} */
 
-.brand {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.brand h1 {
-  font-family: var(--bodyFont);
-  font-size: 1.3rem;
-  font-weight: bold;
-  color: #64ffda;
-  text-transform: uppercase;
-  margin: 0;
-}
-.cart {
+/* .cart {
   background: transparent;
   border: none;
   justify-self: end;
@@ -71,8 +54,8 @@
 .header-blur-effect {
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(20px);
-}
-@media screen and (min-width: 768px) {
+} */
+/* @media screen and (min-width: 768px) {
   .nav {
     background: var(--light-navy);
   }
@@ -84,7 +67,7 @@
     justify-content: center;
     align-items: center;
     column-gap: 2rem;
-    /* background: yellow; */
+  
   }
   .nav-links li {
     transition: var(--transition);
@@ -115,7 +98,7 @@
   .cart {
     justify-self: center;
   }
-}
+} */
 
 .side-drawer-menu {
   position: fixed;
@@ -179,4 +162,15 @@
 
 .side-drawer-menu-links a:hover {
   color: var(--green);
+}
+.cart-login-icon-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 8rem;
+  /* border: 1px solid red; */
+  padding: 0;
+}
+.nav-sign-in {
+  color: #64ffda;
 }

@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../../components/button/Button';
-import { products } from '../../../data/data';
 
-const Cards = ({ image, name, price, id }) => {
+const Cards = ({ image, name, price, id, countInStock }) => {
   return (
     <article className='card'>
       <div className='card-img-container'>
@@ -12,7 +11,7 @@ const Cards = ({ image, name, price, id }) => {
       <div className='card-content-container'>
         <h3>{name}</h3>
         <h4 className='card-price'>${price}</h4>
-        <Link to={`/products/${id}`} target='_blank'>
+        <Link to={`/products/${id}`}>
           <Button>More details</Button>
         </Link>
       </div>

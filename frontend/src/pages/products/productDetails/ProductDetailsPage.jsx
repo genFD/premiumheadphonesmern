@@ -1,21 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import { HiSpeakerphone } from 'react-icons/hi';
 import { BsArrowLeftSquare } from 'react-icons/bs';
 import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
 import { assets } from '../../../assets/assets';
 import Button from '../../../components/button/Button';
 
-import { products } from '../../../data/data';
+// import { products } from '../../../data/data';
 import './productdetails.css';
 import Navbar from '../../../components/navbar/Navbar';
 
 const ProductDetailsPage = () => {
-  const [tooltip, showToolTip] = useState(false);
-  const params = useParams();
-  const product = products.find((p) => p._id === Number(params.id));
-  const { name, imageDetails, price, description } = product;
+  const [product, setProduct] = useState([]);
   const [quantity, setQuantity] = useState(0);
+
+  const params = useParams();
+  const id = params.id;
+  const fetchProduct = async () => {
+    const { data } = await axios.get(`/api/products/${id}`);
+    setProduct(data);
+  };
+
+  useEffect(() => {
+    fetchProduct();
+  }, []);
+
+  const { name, imageDetails, price, description, countInStock } = product;
   const increment = () => {
     setQuantity((prev) => prev + 1);
   };
@@ -24,7 +35,6 @@ const ProductDetailsPage = () => {
   };
   return (
     <>
-      <Navbar />
       <section className='hero'>
         <div className='back-container'>
           <Link to='/'>
@@ -75,10 +85,11 @@ const ProductDetailsPage = () => {
             <div className='price'>
               <p>${price}</p>
             </div>
-
             <div className='cta-container'>
               <Link to='/cart'>
-                <Button>Add to cart</Button>
+                <Button countInStock={countInStock}>
+                  {countInStock === 0 ? 'out of stock' : 'Add to cart'}
+                </Button>
               </Link>
             </div>
           </article>

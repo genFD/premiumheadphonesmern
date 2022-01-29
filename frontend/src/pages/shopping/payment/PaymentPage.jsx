@@ -37,7 +37,6 @@ const PaymentPage = () => {
 
   return (
     <>
-      <Navbar />
       <div className='section-center shipping-center'>
         <div className='container-checkout-shipping-info'>
           <InfoSummary />
@@ -66,7 +65,6 @@ const PaymentPage = () => {
           <TransitionOrder showInfo={showInfo} />
         ) : null}
       </div>
-      <Footer />
     </>
   );
 };

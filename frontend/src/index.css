@@ -21,7 +21,7 @@ Variables
   --pink: #f57dff;
   --blue: #57cbff;
   --black: #222;
-  --red-light: #f8d7da;
+  --red-light: hsl(360, 71%, 66%);
   --red-dark: #842029;
   --green-light: #d1e7dd;
   --green-dark: #0f5132;
@@ -48,9 +48,9 @@ Variables
   --easing: cubic-bezier(0.645, 0.045, 0.355, 1);
   /* --transition: all 0.3s linear; */
   --transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-  --lspacing: 0.1rem;
+  --spacing: 0.1rem;
   --line-height: 1.75;
-  --bradius: 0.25rem;
+  --radius: 0.25rem;
   --max-width: 1170px;
   --fixed-width: 450px;
 }

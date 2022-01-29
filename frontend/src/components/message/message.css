@@ -1,0 +1,22 @@
+.alert {
+  margin: 4rem auto;
+  width: 100%;
+  height: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 1rem;
+}
+.error {
+  background-color: crimson;
+  color: #0a192f;
+}
+.success {
+  background-color: #64ffda;
+  color: #0a192f;
+}
+.neutral {
+  background-color: transparent;
+  color: #64ffda;
+}

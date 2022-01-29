@@ -20,3 +20,18 @@
 .btn:active {
   transform: scale(0.78);
 }
+.disabled {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 30px;
+  margin-top: 13px;
+  color: #64ffda;
+  border: none;
+  text-decoration: none;
+  background: #233554;
+  border-radius: var(--br);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}

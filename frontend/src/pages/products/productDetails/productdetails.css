@@ -90,6 +90,8 @@
   /* display: flex;
   gap: 20px; */
   margin-top: 3rem;
+  background: grey;
+  width: fit-content;
 }
 .back-btn {
   position: absolute;

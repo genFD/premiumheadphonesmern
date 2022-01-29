@@ -35,7 +35,6 @@ const OrderConfirmationPage = () => {
 
   return (
     <>
-      <Navbar />
       <div className='section-center shipping-center'>
         <div className='container-checkout-shipping-info'>
           <InfoSummary />
@@ -67,7 +66,6 @@ const OrderConfirmationPage = () => {
           <TransitionOrder showInfo={showInfo} />
         ) : null}
       </div>
-      <Footer />
     </>
   );
 };
