@@ -1,4 +1,4 @@
-.center {
+/* .center {
   min-height: 100vh;
   margin: 0;
   padding: 0;
@@ -6,7 +6,7 @@
   color: #64ffda;
   text-align: center;
   display: flex;
-  /* align-items: center; */
+  align-items: center;
   justify-content: center;
   font-family: 'Josefin Sans', sans-serif;
 }
@@ -55,4 +55,4 @@
   100% {
     color: #0a192f;
   }
-}
+} */

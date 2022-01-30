@@ -23,31 +23,17 @@ import {
   PRODUCT_TOP_REQUEST,
   PRODUCT_TOP_SUCCESS,
   PRODUCT_TOP_FAIL,
+} from '../constants/productConstants';
+
+import {
   SIDE_DRAWER_CLOSE,
   SIDE_DRAWER_OPEN,
   CART_DRAWER_CLOSE,
   CART_DRAWER_OPEN,
-} from '../constants/productConstants';
-
-export const SideAndCartDrawerReducer = (state, action) => {
-  switch (action.type) {
-    case SIDE_DRAWER_OPEN: {
-      return { ...state, isSideDrawerOpen: true };
-    }
-    case SIDE_DRAWER_CLOSE: {
-      return { ...state, isSideDrawerOpen: false };
-    }
-    case CART_DRAWER_OPEN: {
-      return { ...state, isCartDrawerOpen: true };
-    }
-    case CART_DRAWER_CLOSE: {
-      return { ...state, isCartDrawerOpen: false };
-    }
-    default: {
-      return state;
-    }
-  }
-};
+  GET_PRODUCTS_REQUEST,
+  GET_PRODUCTS_SUCCESS,
+  GET_PRODUCTS_FAILED,
+} from '../actions';
 
 const productsListReducer = (state, action) => {
   switch (action.type) {
@@ -63,17 +49,29 @@ const productsListReducer = (state, action) => {
     case CART_DRAWER_CLOSE: {
       return { ...state, isCartDrawerOpen: false };
     }
-    case PRODUCTS_LIST_REQUEST: {
-      return { loading: true, products: [] };
+    case GET_PRODUCTS_REQUEST: {
+      return { ...state, products_loading: true, products: [] };
     }
-    case PRODUCTS_LIST_SUCCESS: {
-      return { loading: false, products: action.payload };
+    case GET_PRODUCTS_SUCCESS: {
+      const featured_products = action.payload.filter(
+        (product) => product.featured === true
+      );
+      return {
+        ...state,
+        products_loading: false,
+        products: action.payload,
+        featured_products,
+      };
     }
-    case PRODUCTS_LIST_FAIL: {
-      return { loading: false, error: action.payload };
+    case GET_PRODUCTS_FAILED: {
+      return {
+        ...state,
+        products_loading: false,
+        products_error: true,
+      };
     }
     default: {
-      return state;
+      throw new Error(`No matching ${action.type} action type`);
     }
   }
 };

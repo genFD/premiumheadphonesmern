@@ -7,8 +7,8 @@ const Hero = () => {
     <Wrapper>
       <div className='hero-image'>
         <picture>
-          <source srcSet={assets.aboutlg} media='(min-width: 839px)' />
-          <source srcSet={assets.mobile} media='(min-width: 301px)' />
+          <source srcSet={assets.aboutlg} media='(min-width: 768px)' />
+          <source srcSet={assets.small} media='(min-width: 301px)' />
           <img src={assets.mobile} alt='headphones' />
         </picture>
         <div className='banner'>
@@ -25,17 +25,23 @@ const Hero = () => {
 };
 
 const Wrapper = styled.div`
-  min-height: 100vh;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid red;
+
+  @media (min-width: 768px) {
+    height: auto;
+  }
 
   .hero-image {
-    height: 100vh;
+    height: auto;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
   }
   .hero-image picture {
     width: 100%;
@@ -48,15 +54,16 @@ const Wrapper = styled.div`
     padding: 0 3rem;
     position: absolute;
     color: var(--green);
+    bottom: 300px;
   }
   .banner p {
-    max-width: 35rem;
+    max-width: 25rem;
     margin: 0 auto;
     letter-spacing: var(--spacing);
     color: var(--green);
     font-weight: bold;
   }
-  @media (min-width: 839px) {
+  @media (min-width: 768px) {
     .banner {
       left: 0;
     }
