@@ -1,4 +1,20 @@
 import Footer from './footer/Footer';
 import Navbar from './navbar/Navbar';
-
-export { Footer, Navbar };
+import MenuButton from './MenuButton/MenuButton';
+import CartButton from './cart/CartButton';
+import Hero from './pageHero/Hero.jsx';
+import HeroAbout from './heroAbout/HeroAbout';
+import Services from './services/Services';
+import FeaturedProducts from './featureProducts/FeaturedProducts';
+import Contact from './Contact/Contacts';
+export {
+  Footer,
+  Navbar,
+  MenuButton,
+  CartButton,
+  Hero,
+  HeroAbout,
+  Services,
+  FeaturedProducts,
+  Contact,
+};

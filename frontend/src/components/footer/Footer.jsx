@@ -3,19 +3,19 @@ import styled from 'styled-components';
 
 import './Footer.css';
 import Socials from '../social-icons/Socials';
-const Footer = () => {
-  const date = new Date().getFullYear();
-  return (
-    <footer className='footer'>
-      <Socials />
-      <p>
-        &copy; <span>{date}</span> Premium All rights reserved
-      </p>
-    </footer>
-  );
-};
+// const Footer = () => {
+//   const date = new Date().getFullYear();
+//   return (
+//     <footer className='footer'>
+//       <Socials />
+//       <p>
+//         &copy; <span>{date}</span> Premium All rights reserved
+//       </p>
+//     </footer>
+//   );
+// };
 
-const FooterTest = () => {
+const Footer = () => {
   return (
     <Wrapper>
       <p>
@@ -32,11 +32,10 @@ const FooterTest = () => {
 const Wrapper = styled.footer`
   height: 5rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   background: var(--dark-navy);
-  /* border: 1px solid red; */
   text-align: center;
 
   span {
@@ -56,11 +55,10 @@ const Wrapper = styled.footer`
     text-transform: none;
     line-height: 1.25;
     font-family: var(--bodyFont);
-    /* border: 1px solid red; */
   }
   @media (min-width: 776px) {
     flex-direction: row;
   }
 `;
 
-export default FooterTest;
+export default Footer;

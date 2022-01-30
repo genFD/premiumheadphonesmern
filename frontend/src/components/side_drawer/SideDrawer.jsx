@@ -47,7 +47,7 @@ const SideDrawer = () => {
 
   return (
     <SideDrawerContainer>
-      {isSideDrawerOpen ? <Overlay /> : null}
+      {/* {isSideDrawerOpen ? <Overlay /> : null} */}
       <aside
         className={`${
           isSideDrawerOpen ? 'side-drawer show-side-drawer' : 'side-drawer'

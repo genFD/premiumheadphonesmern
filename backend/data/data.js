@@ -11,6 +11,7 @@
 //     countInStock: 3,
 //     rating: 4.5,
 //     numReviews: 4,
+//     featured: true,
 //   },
 //   {
 //     name: 'Apple AirPods Max',
@@ -24,6 +25,7 @@
 //     countInStock: 4,
 //     rating: 5.0,
 //     numReviews: 5,
+//     featured: true,
 //   },
 //   {
 //     name: 'Sony WF-1000XM4',
@@ -37,6 +39,7 @@
 //     countInStock: 9,
 //     rating: 3,
 //     numReviews: 3,
+//     featured: false,
 //   },
 //   {
 //     name: 'Bang & Olufsen Beoplay A1',
@@ -50,6 +53,7 @@
 //     countInStock: 9,
 //     rating: 3,
 //     numReviews: 3,
+//     featured: true,
 //   },
 //   {
 //     name: 'Sony WH-1000XM4',
@@ -63,6 +67,7 @@
 //     countInStock: 0,
 //     rating: 3,
 //     numReviews: 3,
+//     featured: false,
 //   },
 //   {
 //     name: 'Bang & Olufsen Beoplay H8i',
@@ -76,6 +81,7 @@
 //     countInStock: 0,
 //     rating: 3,
 //     numReviews: 3,
+//     featured: false,
 //   },
 // ];
 

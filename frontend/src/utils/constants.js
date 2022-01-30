@@ -1,5 +1,8 @@
 import React from 'react';
-import { GiCompass, GiDiamondHard, GiStabbedNote } from 'react-icons/gi';
+import { GiSoundOn } from 'react-icons/gi';
+import { TiMicrophone } from 'react-icons/ti';
+import { FaBluetooth } from 'react-icons/fa';
+import { MdSurroundSound } from 'react-icons/md';
 export const links = [
   {
     id: 1,
@@ -21,20 +24,20 @@ export const links = [
 export const services = [
   {
     id: 1,
-    icon: <GiCompass />,
-    title: 'mission',
+    icon: <GiSoundOn />,
+    title: 'ANC',
     text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates, ea. Perferendis corrupti reiciendis nesciunt rerum velit autem unde numquam nisi',
   },
   {
     id: 2,
-    icon: <GiDiamondHard />,
-    title: 'vision',
+    icon: <FaBluetooth />,
+    title: 'Bluetooth',
     text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates, ea. Perferendis corrupti reiciendis nesciunt rerum velit autem unde numquam nisi',
   },
   {
     id: 3,
-    icon: <GiStabbedNote />,
-    title: 'history',
+    icon: <TiMicrophone />,
+    title: 'Built-in Mic',
     text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates, ea. Perferendis corrupti reiciendis nesciunt rerum velit autem unde numquam nisi',
   },
 ];

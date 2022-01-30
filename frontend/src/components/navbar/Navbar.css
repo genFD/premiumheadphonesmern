@@ -11,7 +11,7 @@
   transition: var(--transition);
   z-index: 1000;
 } */
-.nav.active {
+/* .nav.active {
   background: var(--dark-navy);
   background: var(--white);
   background: rgba(var(--light-navy), 0.2);
@@ -22,7 +22,7 @@
   width: 100%;
   box-shadow: var(--shadow-3);
   z-index: 500;
-}
+} */
 /* .nav-center {
   width: 100%;
   max-width: 1170px;

@@ -1,6 +1,12 @@
 export const assets = {
   logo: '/images/logo.png',
-  test: '/images/product.jpg',
+  large: '/images/test.jpeg',
+  story: '/images/story.jpeg',
+  mobile: '/images/mobile.jpeg',
+  product: '/images/product.jpg',
+  tall: '/images/tall.jpg',
+  yamaha: '/images/yamha.jpg',
+  aboutlg: '/images/aboutlarge.jpeg',
   email: 'Email',
   address: 'Address',
   city: 'City',
