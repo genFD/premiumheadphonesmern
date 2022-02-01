@@ -29,7 +29,6 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid red;
 
   @media (min-width: 768px) {
     height: auto;
@@ -54,7 +53,7 @@ const Wrapper = styled.div`
     padding: 0 3rem;
     position: absolute;
     color: var(--green);
-    bottom: 300px;
+    /* bottom: 300px; */
   }
   .banner p {
     max-width: 25rem;

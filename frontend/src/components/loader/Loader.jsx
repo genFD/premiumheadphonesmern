@@ -13,6 +13,7 @@ const Loader = () => {
 };
 
 const Wrapper = styled.div`
+  transform: translateY(50%);
   .center {
     min-height: 100vh;
     margin: 0;

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { formatPrice } from '../../utils/helpers';
-const Card = ({ image, name, price, _id }) => {
+const Card = ({ image, name, price, _id: id }) => {
   return (
     <Wrapper>
       <article className='card'>
@@ -12,7 +12,7 @@ const Card = ({ image, name, price, _id }) => {
         <div className='card-content-container'>
           <h3>{name}</h3>
           <h4 className='card-price'>{formatPrice(price)}</h4>
-          <Link to={`/products/${_id}`} className='link'>
+          <Link to={`/products/${id}`} className='link'>
             <button className='btn card-btn'>More details</button>
           </Link>
         </div>
@@ -24,7 +24,7 @@ const Card = ({ image, name, price, _id }) => {
 const Wrapper = styled.div`
   .card {
     position: relative;
-    border: 1px solid var(--green);
+    border: none;
     background: var(--dark-navy);
     width: auto;
     height: 330px;
@@ -32,6 +32,7 @@ const Wrapper = styled.div`
     border-radius: var(--bradius);
     overflow: hidden;
     z-index: 0;
+    transition: var(--transition);
   }
   @media (min-width: 768px) {
     width: 300px;
@@ -52,7 +53,9 @@ const Wrapper = styled.div`
     border: 1px solid green;
     z-index: 3;
   }
-
+  .card:hover {
+    border: 1px solid var(--green);
+  }
   .card:hover::before {
     top: -100%;
   }
@@ -71,11 +74,13 @@ const Wrapper = styled.div`
   .card-img-container {
     position: relative;
     width: 100%;
+    height: 67%;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 20px;
+    /* padding-top: 20px; */
     z-index: 2;
+    /* border: 3px solid royalblue; */
   }
   .card-img-container img {
     max-width: 50%;
@@ -93,6 +98,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     z-index: 1;
     overflow: hidden;
+    /* border: 1px solid red; */
   }
   .card-content-container .link {
     opacity: 1;
@@ -115,9 +121,9 @@ const Wrapper = styled.div`
     text-align: center;
     color: var(--green);
   }
-  .card-btn {
+  /* .card-btn {
     margin-top: 10px;
-  }
+  } */
 `;
 
 export default Card;

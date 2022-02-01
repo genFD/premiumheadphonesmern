@@ -1,39 +1,59 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Cards from './Cards';
-// import { assets } from '../../../assets/assets';
+import { useProductsContext } from '../../../context/products_context';
+import { Card } from '../../../components';
+import styled from 'styled-components';
 import './productslist.css';
-// import { products } from '../../../data/data';
+import Loader from '../../../components/loader/Loader';
+import Message from '../../../components/message/Message';
 
 const ProductsList = () => {
-  const [products, setProducts] = useState([]);
-  const fetchProducts = async () => {
-    const { data } = await axios.get('/api/products');
-    setProducts(data);
-    console.log(products);
-  };
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  const {
+    products_loading: loading,
+    products_error: error,
+    products,
+    fetchProducts,
+  } = useProductsContext();
 
-  return (
-    <main>
+  return loading ? (
+    <Loader />
+  ) : error ? (
+    <Message>{error}</Message>
+  ) : (
+    <Wrapper>
       <section className='products'>
         {products.map(({ image, name, price, _id, countInStock }) => {
           return (
-            <Cards
+            <Card
               key={_id}
               image={image}
               name={name}
               price={price}
-              id={_id}
+              _id={_id}
               countInStock={countInStock}
             />
           );
         })}
       </section>
-    </main>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.main`
+  .products {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    place-items: center;
+    gap: 20px;
+    margin-top: 5rem;
+    padding: 1rem;
+  }
+  @media (min-width: 768px) {
+    .products {
+      padding: 3rem;
+    }
+  }
+`;
 
 export default ProductsList;

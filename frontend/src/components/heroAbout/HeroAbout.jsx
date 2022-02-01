@@ -6,7 +6,7 @@ const HeroAbout = () => {
     <Wrapper>
       <div className='hero-image'>
         <picture>
-          <source srcSet={assets.large} media='(min-width: 839px)' />
+          <source srcSet={assets.large} media='(min-width: 768px)' />
           <source srcSet={assets.mobile} media='(min-width: 301px)' />
           <img src={assets.mobile} alt='headphones' />
         </picture>
@@ -20,17 +20,22 @@ const HeroAbout = () => {
 };
 
 const Wrapper = styled.div`
-  min-height: 100vh;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
 
+  @media (min-width: 768px) {
+    height: auto;
+  }
+
   .hero-image {
-    height: 100%;
+    height: auto;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
   }
   .hero-image picture {
     width: 100%;
@@ -45,16 +50,34 @@ const Wrapper = styled.div`
     color: var(--green);
   }
   .banner p {
-    max-width: 35rem;
+    max-width: 25rem;
     margin: 0 auto;
     letter-spacing: var(--spacing);
     color: var(--green);
     font-weight: bold;
+    display: none;
   }
-  @media (min-width: 839px) {
+  @media (min-width: 768px) {
+    /* .banner {
+      left: 0;
+    } */
+    .banner h1 {
+      max-width: 30rem;
+    }
+
     .banner p {
+      display: block;
       max-width: 20rem;
     }
+  }
+  color: var(--clr-primary-1);
+  a {
+    color: var(--clr-primary-3);
+    padding: 0.5rem;
+    transition: var(--transition);
+  }
+  a:hover {
+    color: var(--clr-primary-1);
   }
 `;
 

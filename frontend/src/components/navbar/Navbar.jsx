@@ -134,21 +134,25 @@ const NavContainer = styled.nav`
   left: 0;
   width: 100vw;
 
-  /* background: var(--navy); */ /* border: 1px solid red; */
   .nav {
-    width: 100%;
+    width: 100vw;
     height: 5rem;
     display: flex;
     align-items: center;
-    /* background: var(--navy); */
+    transition: var(--transition);
   }
+  .nav:hover {
+    background: var(--light-navy);
+  }
+
   .nav.active {
     background: rgba(var(--light-navy), 0.2);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(40px);
     box-shadow: var(--shadow-3);
     position: fixed;
     z-index: 500;
   }
+
   .nav-center {
     width: 90vw;
     margin: 0 auto;

@@ -16,7 +16,7 @@ const FeaturedProducts = () => {
   return loading ? (
     <Loader />
   ) : error ? (
-    <Message>There was an error!!!</Message>
+    <Message error='error'>{error}</Message>
   ) : (
     <Wrapper className='section'>
       <div className='title'>
@@ -24,7 +24,7 @@ const FeaturedProducts = () => {
         <div className='underline'></div>
       </div>
       <div className='section-center featured'>
-        {featured.slice(0, 3).map((product) => {
+        {featured.map((product) => {
           return <Card key={product._id} {...product} />;
         })}
       </div>
@@ -39,6 +39,7 @@ const Wrapper = styled.section`
     margin: 0 auto;
     display: grid;
     gap: 2.5rem;
+    justify-items: center;
   }
 
   @media (min-width: 576px) {

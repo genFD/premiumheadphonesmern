@@ -2,26 +2,24 @@ import React from 'react';
 import styled from 'styled-components';
 import { assets } from '../../assets/assets';
 import { HeroAbout } from '../../components';
-import { useProductsContext } from '../../context/products_context';
 
 const AboutPage = () => {
   return (
     <>
       <HeroAbout />
       <Wrapper className='page section section-center'>
-        <img src={assets.story} alt='headphones' />
+        <img src={assets.about} alt='headphones' />
         <article>
           <div className='title'>
-            <h2>our story</h2>
+            <h2>About us</h2>
             <div className='underline'></div>
           </div>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam
-            quaerat, modi doloremque necessitatibus eum dolor nesciunt delectus,
-            voluptate blanditiis, obcaecati beatae ab aut ipsa consequuntur
-            tempora cumque. Ut quo enim vero odio minus nostrum eveniet,
-            doloribus veritatis dolorem unde ipsum, voluptatibus totam.
-            Explicabo, quas libero! Laborum incidunt minima consequatur ratione?
+            Premium is a catalogue of audio products curated by the best
+            audiophiles. High quality products, no compromised on the drivers,
+            cool design, and a focus on listeners experience. <br /> Our
+            commitment is to offer a selection of products with premium sound
+            and good design to a wider audience.
           </p>
         </article>
       </Wrapper>

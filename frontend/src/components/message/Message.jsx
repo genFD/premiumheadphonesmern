@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import './message.css';
 
 const Message = ({ children, success, error, neutral }) => {
   console.log(success);
@@ -26,7 +25,7 @@ const Wrapper = styled.div`
   .alert {
     margin: 4rem auto;
     width: 100%;
-    height: 4rem;
+    height: 6rem;
     display: flex;
     flex-direction: column;
     justify-content: center;

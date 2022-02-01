@@ -1,6 +1,6 @@
 export const assets = {
   logo: '/images/logo.png',
-  large: '/images/test.jpeg',
+  large: '/images/heroabout.jpg',
   story: '/images/story.jpeg',
   mobile: '/images/mobile.jpeg',
   product: '/images/product.jpg',
@@ -8,6 +8,8 @@ export const assets = {
   small: '/images/small.jpeg',
   yamaha: '/images/yamha.jpg',
   aboutlg: '/images/aboutlarge.jpeg',
+  about: '/images/crop.jpeg',
+  try: '/images/apple-airpods-max.webp',
   email: 'Email',
   address: 'Address',
   city: 'City',

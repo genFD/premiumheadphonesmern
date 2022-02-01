@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { assets } from '../../assets/assets';
 import { services } from '../../utils/constants';
 
 const Services = () => {
@@ -11,10 +12,9 @@ const Services = () => {
             Best audio products <br />
             selection
           </h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-            quisquam saepe id reiciendis sunt, repudiandae libero amet rem quia
-            quod?
+          <p className='services-description'>
+            Curated by the best audiophiles, specialised in quality Hi-fi and
+            high-fidelity sound reproduction.
           </p>
         </article>
         <div className='services-center'>
@@ -51,6 +51,10 @@ const Wrapper = styled.section`
     line-height: 1.8;
     color: var(--slate);
   }
+  .services-description {
+    max-width: 20rem;
+  }
+
   .services-center {
     margin-top: 4rem;
     display: grid;
@@ -61,10 +65,15 @@ const Wrapper = styled.section`
     text-align: center;
     padding: 2.5rem 2rem;
     border-radius: var(--radius);
+    transition: var(--transition);
     p {
       color: var(--clr-primary-2);
     }
   }
+  .service:hover {
+    border: 1px solid var(--green);
+  }
+
   span {
     width: 4rem;
     height: 4rem;
@@ -79,10 +88,10 @@ const Wrapper = styled.section`
       font-size: 2rem;
     }
   }
-  @media (min-width: 992px) {
+  @media (min-width: 768px) {
     .header {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
+      justify-content: space-between;
     }
   }
   @media (min-width: 576px) {
