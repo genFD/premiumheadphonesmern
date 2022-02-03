@@ -10,7 +10,14 @@ import { FaTrash } from 'react-icons/fa';
 // import './orderSummary.css';
 
 const Order = ({ cart }) => {
-  const { shipping, taxes, total_amount, total_items } = useCartContext();
+  const {
+    shipping,
+    taxes,
+    total_amount,
+    total_items,
+    updateAmount,
+    removeItem,
+  } = useCartContext();
 
   if (cart && cart.length < 1) {
     return <Message>Your cart is empty</Message>;
@@ -26,11 +33,10 @@ const Order = ({ cart }) => {
                     <img src={image} alt='' />
                   </Link>
                   <p className='items-name'>{name}</p>
-                  <button
-                    className='delete-btn'
-                    onClick={() => removeFromCartHandler(id)}>
+                  <button className='delete-btn' onClick={() => removeItem(id)}>
                     <FaTrash />
                   </button>
+
                   <span>{quantity}</span>
                 </div>
                 <p className='items-price'>{formatPrice(price)}</p>
@@ -42,8 +48,8 @@ const Order = ({ cart }) => {
 
           <div className='cart-total'>
             <div className='subtotal'>
-              <p>{formatPrice(shipping)}</p>
-              <p>amount</p>
+              <p>Subtotal</p>
+              <p>{formatPrice(total_amount)}</p>
             </div>
             <div className='shipping'>
               <p>Shipping</p>
@@ -57,7 +63,7 @@ const Order = ({ cart }) => {
           <div className='divider'></div>
           <div className='total'>
             <p>Total</p>
-            <p>Amount</p>
+            <p>{formatPrice(total_amount + shipping + taxes)}</p>
           </div>
         </div>
       </Wrapper>

@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useReducer } from 'react';
 import axios from 'axios';
 import {
   ADD_TO_CART,
+  COUNT_CART_TOTALS,
   REMOVE_CART_ITEM,
   TOGGLE_CART_ITEM_AMOUNT,
 } from '../actions';
@@ -70,6 +71,7 @@ export const CartProvider = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(state.cart));
+    dispatch({ type: COUNT_CART_TOTALS });
   }, [state.cart]);
   return (
     <CartContext.Provider

@@ -4,7 +4,7 @@ import {
   CART_SAVE_PAYMENT_METHOD,
   CART_SAVE_SHIPPING_ADDRESS,
 } from '../constants/cartConstants';
-import { ADD_TO_CART, REMOVE_CART_ITEM } from '../actions';
+import { ADD_TO_CART, COUNT_CART_TOTALS, REMOVE_CART_ITEM } from '../actions';
 
 const cartReducer = (state, action) => {
   switch (action.type) {
@@ -45,21 +45,40 @@ const cartReducer = (state, action) => {
         };
       }
     case REMOVE_CART_ITEM:
-      const tempCart = state.cartItems.filter((i) => i.id !== action.payload);
+      const tempCart = state.cart.filter((i) => i.id !== action.payload);
       return {
         ...state,
-        cartItems: tempCart,
+        cart: tempCart,
       };
-      // case CART_SAVE_SHIPPING_ADDRESS:
-      //   return {
-      //     ...state,
-      //     shippingAddress: action.payload,
-      //   };
-      // case CART_SAVE_PAYMENT_METHOD:
+
+    case COUNT_CART_TOTALS:
+      const { total_items, total_amount } = state.cart.reduce(
+        (acc, curr) => {
+          const { quantity, price } = curr;
+          acc.total_items += quantity;
+          acc.total_amount += price * quantity;
+          return acc;
+        },
+        {
+          total_items: 0,
+          total_amount: 0,
+        }
+      );
       return {
         ...state,
-        paymentMethod: action.payload,
+        total_items,
+        total_amount,
       };
+    // case CART_SAVE_SHIPPING_ADDRESS:
+    //   return {
+    //     ...state,
+    //     shippingAddress: action.payload,
+    //   };
+    // case CART_SAVE_PAYMENT_METHOD:
+    // return {
+    //   ...state,
+    //   paymentMethod: action.payload,
+    // };
     default:
       return state;
   }
