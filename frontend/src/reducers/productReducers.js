@@ -9,10 +9,18 @@ import {
   GET_SINGLE_PRODUCT_REQUEST,
   GET_SINGLE_PRODUCT_SUCCESS,
   GET_SINGLE_PRODUCT_FAILED,
+  HIDE_NAVBAR,
+  SHOW_NAVBAR,
 } from '../actions';
 
 const productsListReducer = (state, action) => {
   switch (action.type) {
+    case HIDE_NAVBAR: {
+      return { ...state, hideNav: true };
+    }
+    case SHOW_NAVBAR: {
+      return { ...state, hideNav: false };
+    }
     case SIDE_DRAWER_OPEN: {
       return { ...state, isSideDrawerOpen: true };
     }

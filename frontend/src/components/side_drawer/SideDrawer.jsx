@@ -8,6 +8,7 @@ import CloseButton from '../Close-btn/CloseButton';
 import { FaTimes } from 'react-icons/fa';
 import Overlay from '../overlay/Overlay';
 import Logo from '../logo/Logo';
+import { CartButton } from '..';
 
 // const SideDrawer = () => {
 //   const { isSideDrawerOpen, closeSideDrawer } = useProductsContext();
@@ -148,6 +149,7 @@ const SideDrawerContainer = styled.div`
     transform: translate(0);
     z-index: 999;
   }
+
   @media screen and (min-width: 992px) {
     .side-drawer {
       display: none;

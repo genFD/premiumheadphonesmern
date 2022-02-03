@@ -2,86 +2,19 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { links } from '../../utils/constants';
-import { FaOpencart, FaUserAstronaut } from 'react-icons/fa';
+import NavbarLogin from '../navbarLogin/NavbarLogin';
 import { useProductsContext } from '../../context/products_context';
 
 import './Navbar.css';
 import MenuButton from '../MenuButton/MenuButton';
 import CartButton from '../cart/CartButton';
 import Logo from '../logo/Logo';
-
-// const Navbar = () => {
-//   const { openSideDrawer, openCartDrawer } = useProductsContext();
-
-//   const [fixedNavbar, setFixedNavbar] = useState(false);
-
-//   const navbarFixer = () => {
-//     if (window.pageYOffset > 80) {
-//       setFixedNavbar(true);
-//     } else {
-//       setFixedNavbar(false);
-//     }
-//   };
-//   window.addEventListener('scroll', () => {
-//     navbarFixer();
-//   });
-//   return (
-//     <>
-//       <nav className={`nav ${fixedNavbar ? 'active' : null}`}>
-//         <div className='nav-center'>
-//           <div className='nav-header'>
-//             <button className='nav-btn' onClick={openSideDrawer}>
-//               <Logo />
-//             </button>
-//             <div className='brand'>
-//               <Link to='/'>
-//                 <h1>Premium</h1>
-//               </Link>
-//             </div>
-//             <ul className='nav-links'>
-//               <li>
-//                 <Link to='/'>Shop</Link>
-//               </li>
-//               <li>
-//                 <Link to='/about' className='menu-link'>
-//                   about
-//                 </Link>
-//               </li>
-//               <li>
-//                 <Link to='/contact' className='menu-link'>
-//                   contact
-//                 </Link>
-//               </li>
-//             </ul>
-//             <ul className='cart-login-icon-container'>
-//               <li>
-//                 <button className='cart' onClick={openCartDrawer}>
-//                   <FaOpencart cursor='pointer' color='#64ffda' size='1.5rem' />
-//                 </button>
-//               </li>
-//               <li>
-//                 <button className='cart'>
-//                   <FaUserAstronaut
-//                     cursor='pointer'
-//                     color='#64ffda'
-//                     size='1.3rem'
-//                   />
-//                 </button>
-//               </li>
-//               <li>
-//                 <span className='nav-sign-in'>Sign in</span>
-//               </li>
-//             </ul>
-//           </div>
-//         </div>
-//       </nav>
-//     </>
-//   );
-// };
+import UserButton from '../userButton/UserButton';
+import { useUserContext } from '../../context/user_context';
 
 const Navbar = () => {
   const [fixedNavbar, setFixedNavbar] = useState(false);
-
+  const { userInfo } = useUserContext();
   const navbarFixer = () => {
     if (window.pageYOffset > 80) {
       setFixedNavbar(true);
@@ -92,8 +25,10 @@ const Navbar = () => {
   window.addEventListener('scroll', () => {
     navbarFixer();
   });
-  const { openSideDrawer, openCartDrawer } = useProductsContext();
-  return (
+  const { openSideDrawer, hideNav } = useProductsContext();
+  return hideNav ? (
+    <NavbarLogin />
+  ) : (
     <NavContainer>
       <div className={`nav ${fixedNavbar ? 'active' : null}`}>
         <div className='nav-center'>
@@ -117,7 +52,16 @@ const Navbar = () => {
               );
             })}
           </ul>
-          <CartButton />
+          <div className='nav-info'>
+            <CartButton />
+            {userInfo ? (
+              <UserButton title={userInfo.name} />
+            ) : (
+              <Link to='/login'>
+                <button className='login-btn'>Login</button>
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </NavContainer>
@@ -125,6 +69,9 @@ const Navbar = () => {
 };
 
 const NavContainer = styled.nav`
+  .hide-navbar {
+    display: none;
+  }
   height: 5rem;
   display: flex;
   align-items: center;
@@ -133,6 +80,14 @@ const NavContainer = styled.nav`
   top: 0;
   left: 0;
   width: 100vw;
+
+  .login-btn {
+    font-family: var(--bodyFont);
+    border: 0;
+    background: transparent;
+    color: var(--green);
+    cursor: pointer;
+  }
 
   .nav {
     width: 100vw;
@@ -172,6 +127,10 @@ const NavContainer = styled.nav`
   }
   .nav-links {
     display: none;
+  }
+  .nav-info {
+    display: flex;
+    /* border: 1px solid red; */
   }
 
   .brand {

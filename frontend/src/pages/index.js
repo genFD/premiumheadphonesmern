@@ -6,6 +6,8 @@ import Payment from './checkout/payment/PaymentPage';
 import OrderConfirmation from './checkout/orderConfirmation/OrderConfirmationPage';
 import Error from './error/ErrorPage';
 import About from './about/AboutPage.jsx';
+import Login from './auth-user/login/LoginPage';
+import Register from './auth-user/register/RegisterPage';
 export {
   Home,
   SingleProduct,
@@ -15,4 +17,6 @@ export {
   Error,
   About,
   ProductsList,
+  Login,
+  Register,
 };

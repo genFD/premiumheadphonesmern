@@ -8,6 +8,8 @@ import orderRoutes from './routes/orderRoutes.js';
 
 connectDB();
 const app = express();
+app.use(express.json());
+
 dotenv.config();
 app.get('/', (req, res) => {
   res.send('api is runningfejhfjfedf');

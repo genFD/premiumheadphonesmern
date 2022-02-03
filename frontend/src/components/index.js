@@ -11,6 +11,8 @@ import Card from './productcard/Card';
 import ExpressCheckOut from './expressCheckout/ExpressCheckout';
 import ShippingInfo from './shippingInfo/ShippingInfo';
 import InfoSummary from './informationSummary/InfoSummary';
+import Message from './message/Message';
+import Loader from './loader/Loader';
 export {
   Footer,
   Navbar,
@@ -25,4 +27,6 @@ export {
   ExpressCheckOut,
   ShippingInfo,
   InfoSummary,
+  Message,
+  Loader,
 };

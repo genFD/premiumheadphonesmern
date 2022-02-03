@@ -55,6 +55,12 @@ const Wrapper = styled.div`
   }
   .card:hover {
     border: 1px solid var(--green);
+    .card-price {
+      opacity: 1;
+    }
+    .card-content-container h3 {
+      opacity: 0;
+    }
   }
   .card:hover::before {
     top: -100%;
@@ -120,7 +126,10 @@ const Wrapper = styled.div`
     letter-spacing: 1px;
     text-align: center;
     color: var(--green);
+    opacity: 0;
+    transition: var(--transition);
   }
+
   /* .card-btn {
     margin-top: 10px;
   } */

@@ -13,6 +13,8 @@ import {
   GET_SINGLE_PRODUCT_REQUEST,
   GET_SINGLE_PRODUCT_SUCCESS,
   GET_SINGLE_PRODUCT_FAILED,
+  HIDE_NAVBAR,
+  SHOW_NAVBAR,
 } from '../actions';
 
 import reducer from '../reducers/productReducers';
@@ -20,6 +22,7 @@ import reducer from '../reducers/productReducers';
 const { createContext } = React;
 
 const initialState = {
+  hideNav: false,
   isSideDrawerOpen: false,
   isCartDrawerOpen: false,
   products_loading: false,
@@ -36,6 +39,12 @@ const ProductsContext = createContext();
 const ProductsProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const hideNavBar = () => {
+    dispatch({ type: HIDE_NAVBAR });
+  };
+  const showNavBar = () => {
+    dispatch({ type: SHOW_NAVBAR });
+  };
   const openSideDrawer = () => {
     dispatch({ type: SIDE_DRAWER_OPEN });
   };
@@ -96,6 +105,8 @@ const ProductsProvider = ({ children }) => {
         closeCartDrawer,
         fetchProducts,
         fetchSingleProduct,
+        hideNavBar,
+        showNavBar,
       }}>
       {children}
     </ProductsContext.Provider>

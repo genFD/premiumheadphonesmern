@@ -18,4 +18,5 @@ export const assets = {
   firstName: 'First Name',
   lastName: 'Last Name',
   phone: 'Phone',
+  password: 'Password',
 };
