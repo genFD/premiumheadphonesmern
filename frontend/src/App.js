@@ -22,7 +22,7 @@ function App() {
         <Route path='/products' element={<ProductsList />} />
         <Route path='/about' element={<About />} />
         <Route path='/products/:id' element={<SingleProduct />} />
-        <Route path='/cart' element={<ShippingInformation />} />
+        <Route path='/cart/*' element={<ShippingInformation />} />
         <Route path='/payment' element={<Payment />} />
         <Route path='/confirmation' element={<OrderConfirmation />} />
         <Route path='*' element={<Error />} />

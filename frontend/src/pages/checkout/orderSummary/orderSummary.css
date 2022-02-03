@@ -24,7 +24,7 @@
   /* justify-content: space-between; */
   align-items: center;
   justify-self: start;
-  /* border: 1px solid lightcoral; */
+  border: 1px solid lightcoral;
   gap: 20px;
   position: relative;
   z-index: -1000;

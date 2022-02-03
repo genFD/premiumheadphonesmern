@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
-import { Link } from 'react-router-dom';
-import Button from '../../../components/button/Button';
-import Footer from '../../../components/footer/Footer';
-import Navbar from '../../../components/navbar/Navbar';
-
-import ExpressCheckout from '../expressCheckout/ExpressCheckout';
-import InfoSummary from '../informationSummary/InfoSummary';
 import { Order, TransitionOrder } from '../orderSummary/Order';
-import ShippingInfo from '../shippingInfo/ShippingInfo';
+import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
+import { ImCheckboxChecked } from 'react-icons/im';
+import './orderConfirmation.css';
+import { InfoSummary } from '../../../components';
 
-const PaymentPage = () => {
+const OrderConfirmationPage = () => {
   const [showInfo, setShowInfo] = useState(false);
   let w = window.innerWidth;
   const orderDisplayer = () => {
@@ -40,12 +35,15 @@ const PaymentPage = () => {
       <div className='section-center shipping-center'>
         <div className='container-checkout-shipping-info'>
           <InfoSummary />
-          <div className='shipping-info'>
-            <ExpressCheckout />
+          <div className='confirmed-message'>
+            <h2>Order Confirmed</h2>
+            <ImCheckboxChecked
+              className='confirmed-icon'
+              size='40'
+              color='#64ffda'
+            />
           </div>
-          <Link to='/confirmation'>
-            <Button type='submit'>Pay now</Button>
-          </Link>
+          {/* <div className='shipping-info'></div> */}
         </div>
         <button
           className={`showinfo ${showInfo ? 'showinfotrue' : 'showinfofalse'}`}
@@ -69,4 +67,4 @@ const PaymentPage = () => {
   );
 };
 
-export default PaymentPage;
+export default OrderConfirmationPage;

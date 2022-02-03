@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { assets } from '../../../assets/assets';
-import Button from '../../../components/button/Button';
+import { assets } from '../../assets/assets';
+import Button from '../button/Button';
 import './shippingInfo.css';
 
 const ShippingInfo = () => {

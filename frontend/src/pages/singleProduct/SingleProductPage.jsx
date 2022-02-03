@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useProductsContext } from '../../../context/products_context';
-import { products_url as url } from '../../../utils/constants';
-import { FaMinus, FaPlus } from 'react-icons/fa';
+import { useProductsContext } from '../../context/products_context';
+import { useCartContext } from '../../context/cart_context';
+
 import { HiSpeakerphone } from 'react-icons/hi';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import Loader from '../../../components/loader/Loader';
-import Message from '../../../components/message/Message';
-import { formatPrice } from '../../../utils/helpers';
+import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
+
+import Loader from '../../components/loader/Loader';
+import Message from '../../components/message/Message';
+import { formatPrice } from '../../utils/helpers';
 
 // import './productdetails.css';
 
-const SingleProduct = () => {
-  const [quantity, setQuantity] = useState(0);
+const SingleProductPage = () => {
+  const [quantity, setQuantity] = useState(1);
 
   const { id } = useParams();
-
+  // const { search } = useLocation();
+  // const quantity = search ? Number(search.split('=')[1]) : 1;
   const navigate = useNavigate();
   const {
     single_product_loading: loading,
@@ -25,22 +26,22 @@ const SingleProduct = () => {
     fetchSingleProduct,
   } = useProductsContext();
 
+  const { addToCart, cart } = useCartContext();
+
   useEffect(() => {
     fetchSingleProduct(id);
   }, []);
 
-  const increment = () => {
-    setQuantity((prev) => prev + 1);
+  const addToCartHandler = () => {
+    navigate(`/cart/${id}?qty=${quantity}`);
   };
-  const decrement = () => {
-    setQuantity((prev) => prev - 1);
-  };
-  const { name, imageDetails, price, description, countInStock } = product;
 
+  const { name, image, imageDetails, price, description, countInStock } =
+    product;
   return loading ? (
     <Loader />
   ) : error ? (
-    <Message>{error}</Message>
+    <Message error='error'>{error}</Message>
   ) : (
     <Wrapper>
       <div className='back-container'>
@@ -66,24 +67,20 @@ const SingleProduct = () => {
           <div className='quantity'>
             <p>Quantity:</p>
             <div className='counter-container'>
-              <button
-                className='count-btn'
-                type='button'
-                onClick={() => decrement()}>
-                <FaMinus style={{ color: '#64ffda', cursor: 'pointer' }} />
-              </button>
-              <div className='quantity-container'>
-                <p>{quantity < 0 ? 0 : quantity}</p>
-              </div>
-              <button
-                className='count-btn'
-                type='button'
-                onClick={() => increment()}>
-                <FaPlus
-                  style={{ color: '#64ffda', cursor: 'pointer' }}
-                  className='icon-qty'
-                />
-              </button>
+              {countInStock > 0 && (
+                <select
+                  className='select'
+                  value={quantity}
+                  onChange={(e) => setQuantity(Number(e.target.value))}>
+                  {[...Array(countInStock).keys()].map((x) => {
+                    return (
+                      <option key={x + 1} value={x + 1}>
+                        {x + 1}
+                      </option>
+                    );
+                  })}
+                </select>
+              )}
             </div>
           </div>
 
@@ -92,10 +89,21 @@ const SingleProduct = () => {
           </div>
           <div className='cta-container'>
             <Link to='/cart'>
-              <button className='btn'>
-                {countInStock === 0 ? 'out of stock' : 'Add to cart'}
+              <button
+                className={countInStock === 0 ? 'disabled' : 'btn'}
+                onClick={() =>
+                  addToCart(id, name, image, price, quantity, countInStock)
+                }
+                disabled={countInStock === 0}>
+                {countInStock === 0 ? 'Out of stock' : 'Add to cart'}
               </button>
             </Link>
+            {/* <button
+              className={countInStock === 0 ? 'disabled' : 'btn'}
+              onClick={addToCartHandler}
+              disabled={countInStock === 0}>
+              {countInStock === 0 ? 'Out of stock' : 'Add to cart'}
+            </button> */}
           </div>
         </article>
       </div>
@@ -138,23 +146,7 @@ const Wrapper = styled.section`
   .product-info {
     max-height: 80rem;
   }
-  .quantity-container {
-    display: grid;
-    place-items: center;
-    height: 2rem;
-    width: 2rem;
-    background: var(--green);
-    color: var(--dark-navy);
-    /* margin-top: 2rem; */
-  }
-  .count-btn {
-    background: transparent;
-    border: none;
-    transition: var(--transition);
-  }
-  .count-btn:active {
-    transform: scale(0.78);
-  }
+
   .guarantee {
     display: flex;
 
@@ -183,6 +175,15 @@ const Wrapper = styled.section`
   .quantity p {
     margin: 0;
   }
+  .select {
+    background: var(--green);
+    color: #0a192f;
+    padding: 4px 10px;
+    font-size: 14px;
+    font-family: var(--bodyFont);
+    border-radius: var(--radius);
+    border: none;
+  }
   .price {
     border-bottom: 0.1rem solid var(--slate);
     margin-bottom: 1rem;
@@ -198,6 +199,17 @@ const Wrapper = styled.section`
     margin-top: 3rem;
     background: grey;
     width: fit-content;
+  }
+  .disabled {
+    padding: 10px 30px;
+    color: white;
+    border: none;
+    text-decoration: none;
+    background: #233554;
+    border-radius: var(--br);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
   }
   .back-btn {
     position: absolute;
@@ -256,4 +268,4 @@ const Wrapper = styled.section`
   }
 `;
 
-export default SingleProduct;
+export default SingleProductPage;

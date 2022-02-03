@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
-import Button from '../../../components/button/Button';
-import Footer from '../../../components/footer/Footer';
-import Navbar from '../../../components/navbar/Navbar';
-import ExpressCheckout from '../expressCheckout/ExpressCheckout';
-import { Order, TransitionOrder } from '../orderSummary/Order';
-import ShippingInfo from '../shippingInfo/ShippingInfo';
-import './informationPage.css';
+import { Link } from 'react-router-dom';
 
-const InformationPage = () => {
+import { ExpressCheckOut, InfoSummary } from '../../../components';
+
+import { Order, TransitionOrder } from '../orderSummary/Order';
+
+const PaymentPage = () => {
   const [showInfo, setShowInfo] = useState(false);
   let w = window.innerWidth;
   const orderDisplayer = () => {
@@ -37,9 +35,15 @@ const InformationPage = () => {
     <>
       <div className='section-center shipping-center'>
         <div className='container-checkout-shipping-info'>
+          <InfoSummary />
           <div className='shipping-info'>
-            <ShippingInfo />
+            <ExpressCheckOut />
           </div>
+          <Link to='/confirmation'>
+            <button className='btn' type='submit'>
+              Pay now
+            </button>
+          </Link>
         </div>
         <button
           className={`showinfo ${showInfo ? 'showinfotrue' : 'showinfofalse'}`}
@@ -63,4 +67,4 @@ const InformationPage = () => {
   );
 };
 
-export default InformationPage;
+export default PaymentPage;

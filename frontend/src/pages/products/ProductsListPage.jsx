@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useProductsContext } from '../../../context/products_context';
-import { Card } from '../../../components';
+import { useProductsContext } from '../../context/products_context';
+import { Card } from '../../components';
 import styled from 'styled-components';
-import './productslist.css';
-import Loader from '../../../components/loader/Loader';
-import Message from '../../../components/message/Message';
+
+import Loader from '../../components/loader/Loader';
+import Message from '../../components/message/Message';
 
 const ProductsList = () => {
   const {
     products_loading: loading,
     products_error: error,
     products,
-    fetchProducts,
   } = useProductsContext();
 
   return loading ? (
