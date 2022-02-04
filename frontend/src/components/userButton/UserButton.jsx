@@ -125,9 +125,5 @@ const Wrapper = styled.div`
     color: var(--slate);
     letter-spacing: var(--spacing);
   }
-  .ArrowSorted:hover {
-    background: var(--slate);
-    color: var(--dark-navy);
-  }
 `;
 export default UserButton;

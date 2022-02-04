@@ -11,8 +11,6 @@ const RegisterPage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState(null);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -108,7 +106,7 @@ const RegisterPage = () => {
               <button className='btn'>Register</button>
             </div>
             <p className='text'>
-              Already a user?
+              Have an account?
               <Link
                 to={redirect ? `/login?redirect=${redirect}` : '/login'}
                 style={{
