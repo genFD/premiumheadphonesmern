@@ -24,11 +24,13 @@ const UserButton = ({ title }) => {
           <span className='login-value'>{title}</span>
         </span>
       </button>
-      {dropDown && <TransitionDropDown dropDown={dropDown} />}
+      {dropDown && (
+        <TransitionDropDown dropDown={dropDown} setDropDown={setDropDown} />
+      )}
     </Wrapper>
   );
 };
-const TransitionDropDown = ({ dropDown }) => {
+const TransitionDropDown = ({ dropDown, setDropDown }) => {
   return (
     <>
       <Transition
@@ -44,7 +46,7 @@ const TransitionDropDown = ({ dropDown }) => {
         {(styles, item) =>
           item && (
             <animated.div style={styles}>
-              <DropDown />
+              <DropDown setDropDown={setDropDown} />
             </animated.div>
           )
         }
@@ -53,31 +55,34 @@ const TransitionDropDown = ({ dropDown }) => {
   );
 };
 
-const DropDown = () => {
+const DropDown = ({ setDropDown }) => {
   const { logout } = useUserContext();
   return (
     <DropDownWrapper>
-      <Link to='/profile'>
-        <span>Profile</span>
-      </Link>
-      <span onClick={() => logout()}>Logout</span>
+      <article>
+        <Link onClick={() => setDropDown(false)} to='/profile'>
+          <span>Profile</span>
+        </Link>
+        <span onClick={() => logout()}>Logout</span>
+      </article>
     </DropDownWrapper>
   );
 };
 const DropDownWrapper = styled.div`
-  width: 6rem;
-  height: 6rem;
-  background: var(--light-navy);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  transition: var(--transition);
-  &:hover {
-    border: 1px solid var(--green);
+  article {
+    width: 6rem;
+    height: 5rem;
+    background: var(--light-navy);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    transition: var(--transition);
+    border-bottom: 1px solid var(--green);
   }
-  transition: var(--transition);
+
   span {
     color: var(--slate);
     transition: var(--transition);
@@ -116,7 +121,6 @@ const Wrapper = styled.div`
     color: var(--clr-white);
     padding: 12px;
   }
-
   .auth-btn {
     background: transparent;
     border-color: transparent;
@@ -124,6 +128,13 @@ const Wrapper = styled.div`
     cursor: pointer;
     color: var(--slate);
     letter-spacing: var(--spacing);
+    /* display: none; */
+  }
+
+  @media (min-width: 768px) {
+    .auth-btn {
+      display: block;
+    }
   }
 `;
 export default UserButton;

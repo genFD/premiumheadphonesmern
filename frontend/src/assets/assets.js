@@ -15,7 +15,7 @@ export const assets = {
   city: 'City',
   postalCode: 'PostalCode',
   country: 'Country',
-  firstName: 'First Name',
+  firstName: 'Name',
   lastName: 'Last Name',
   phone: 'Phone',
   password: 'Password',

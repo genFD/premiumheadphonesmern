@@ -88,6 +88,10 @@ body::-webkit-scrollbar-track {
   background: var(--navy);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 ::selection {
   background-color: var(--lightest-navy);
   color: var(--lightest-slate);

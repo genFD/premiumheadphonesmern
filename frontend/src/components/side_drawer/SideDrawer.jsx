@@ -9,6 +9,8 @@ import { FaTimes } from 'react-icons/fa';
 import Overlay from '../overlay/Overlay';
 import Logo from '../logo/Logo';
 import { CartButton } from '..';
+import UserButton from '../userButton/UserButton';
+import { useUserContext } from '../../context/user_context';
 
 // const SideDrawer = () => {
 //   const { isSideDrawerOpen, closeSideDrawer } = useProductsContext();
@@ -45,7 +47,7 @@ import { CartButton } from '..';
 
 const SideDrawer = () => {
   const { closeSideDrawer, isSideDrawerOpen } = useProductsContext();
-
+  const { userInfo } = useUserContext();
   return (
     <SideDrawerContainer>
       {/* {isSideDrawerOpen ? <Overlay /> : null} */}
@@ -70,6 +72,22 @@ const SideDrawer = () => {
             );
           })}
         </ul>
+        <div className='user-cart-container'>
+          <button className='profile-btn' onClick={closeSideDrawer}>
+            <CartButton />
+          </button>
+          {userInfo ? (
+            <Link to='/profile'>
+              <button onClick={closeSideDrawer} className='profile-btn'>
+                <span>{userInfo.name}</span>
+              </button>
+            </Link>
+          ) : (
+            <Link to='/login'>
+              <button className='login-btn'>Login</button>
+            </Link>
+          )}
+        </div>
         <Socials />
       </aside>
     </SideDrawerContainer>
@@ -78,6 +96,18 @@ const SideDrawer = () => {
 
 const SideDrawerContainer = styled.div`
   text-align: center;
+
+  .profile-btn {
+    background: transparent;
+    border: transparent;
+    color: var(--slate);
+    font-family: var(--bodyFont);
+    cursor: pointer;
+  }
+  .profile-btn:hover {
+    color: var(--green);
+  }
+
   .side-drawer-header {
     display: flex;
     justify-content: space-between;
@@ -92,6 +122,12 @@ const SideDrawerContainer = styled.div`
     cursor: pointer;
     color: var(--red-dark);
   }
+  .user-cart-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5rem;
+  }
+
   .close-btn:hover {
     color: var(--red-light);
   }

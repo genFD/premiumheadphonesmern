@@ -45,8 +45,9 @@ const Wrapper = styled.main`
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     place-items: center;
     gap: 20px;
-    margin-top: 5rem;
+    margin-top: 6rem;
     padding: 1rem;
+    /* border: 1px solid red; */
   }
   @media (min-width: 768px) {
     .products {

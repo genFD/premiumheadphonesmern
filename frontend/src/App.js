@@ -11,6 +11,7 @@ import {
   ProductsList,
   Login,
   Register,
+  Profile,
 } from './pages';
 import { Footer, Navbar } from './components';
 import SideDrawer from './components/side_drawer/SideDrawer';
@@ -23,6 +24,7 @@ function App() {
       <Routes>
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/profile' element={<Profile />} />
         <Route path='/' element={<Home />} />
         <Route path='/products' element={<ProductsList />} />
         <Route path='/about' element={<About />} />

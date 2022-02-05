@@ -8,6 +8,7 @@ import Error from './error/ErrorPage';
 import About from './about/AboutPage.jsx';
 import Login from './auth-user/login/LoginPage';
 import Register from './auth-user/register/RegisterPage';
+import Profile from './auth-user/profile/ProfilePage';
 export {
   Home,
   SingleProduct,
@@ -19,4 +20,5 @@ export {
   ProductsList,
   Login,
   Register,
+  Profile,
 };

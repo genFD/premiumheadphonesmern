@@ -129,7 +129,7 @@ const NavContainer = styled.nav`
     display: none;
   }
   .nav-info {
-    display: flex;
+    display: none;
     /* border: 1px solid red; */
   }
 
@@ -180,6 +180,9 @@ const NavContainer = styled.nav`
     }
     .cart-btn-wrapper {
       display: grid;
+    }
+    .nav-info {
+      display: flex;
     }
   }
 `;
