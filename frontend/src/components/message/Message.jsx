@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Message = ({ children, success, error, neutral }) => {
-  console.log(success);
   return (
     <Wrapper>
       <div

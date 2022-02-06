@@ -7,9 +7,10 @@ import Message from '../../../components/message/Message';
 import { formatPrice } from '../../../utils/helpers';
 import { Link } from 'react-router-dom';
 import { FaTrash } from 'react-icons/fa';
+import { useOrderContext } from '../../../context/order_context';
 // import './orderSummary.css';
 
-const Order = ({ cart }) => {
+const Order = () => {
   const {
     shipping,
     taxes,
@@ -17,7 +18,16 @@ const Order = ({ cart }) => {
     total_items,
     updateAmount,
     removeItem,
+    clearCart,
+    cart,
   } = useCartContext();
+
+  const { order_success: success } = useOrderContext();
+  // useEffect(() => {
+  //   if (success) {
+  //     clearCart();
+  //   }
+  // }, []);
 
   if (cart && cart.length < 1) {
     return <Message>Your cart is empty</Message>;

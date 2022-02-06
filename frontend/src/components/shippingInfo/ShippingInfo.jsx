@@ -1,24 +1,30 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { assets } from '../../assets/assets';
+import { useCartContext } from '../../context/cart_context';
 import Button from '../button/Button';
 import './shippingInfo.css';
 
 const ShippingInfo = () => {
-  const [email, setEmail] = useState('');
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [postalCode, setPostal] = useState('');
-  const [country, setCountry] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phone, setPhone] = useState('');
+  const { shippingAddress, saveShippingAddress } = useCartContext();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState(shippingAddress.email);
+  const [address, setAddress] = useState(shippingAddress.address);
+  const [city, setCity] = useState(shippingAddress.city);
+  const [postalCode, setPostal] = useState(shippingAddress.postalCode);
+  const [country, setCountry] = useState(shippingAddress.country);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    saveShippingAddress({ email, address, city, country, postalCode });
+    navigate('/payment');
+  };
 
   return (
     <div className='shipping-information-container'>
       <div className='form-container'>
         <p>Contact information</p>
-        <form action=''>
+        <form onSubmit={submitHandler}>
           <div className='contact-information'>
             <div className='form-control'>
               <input
@@ -64,47 +70,6 @@ const ShippingInfo = () => {
                 })}
               </label>
             </div>
-
-            <div className='form-control'>
-              <input
-                type='text'
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                required
-              />
-              <label>
-                {assets.firstName.split('').map((letter, idx) => {
-                  return (
-                    <span
-                      key={idx}
-                      style={{ transitionDelay: `${idx * 50}ms` }}>
-                      {letter}
-                    </span>
-                  );
-                })}
-              </label>
-            </div>
-
-            <div className='form-control'>
-              <input
-                type='text'
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                required
-              />
-              <label>
-                {assets.lastName.split('').map((letter, idx) => {
-                  return (
-                    <span
-                      key={idx}
-                      style={{ transitionDelay: `${idx * 50}ms` }}>
-                      {letter}
-                    </span>
-                  );
-                })}
-              </label>
-            </div>
-
             <div className='form-control'>
               <input
                 type='text'
@@ -164,30 +129,9 @@ const ShippingInfo = () => {
                 })}
               </label>
             </div>
-
-            <div className='form-control'>
-              <input
-                type='text'
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-              />
-              <label>
-                {assets.phone.split('').map((letter, idx) => {
-                  return (
-                    <span
-                      key={idx}
-                      style={{ transitionDelay: `${idx * 50}ms` }}>
-                      {letter}
-                    </span>
-                  );
-                })}
-              </label>
-            </div>
           </div>
-          <Link to='/payment'>
-            <Button type='submit'>Continue to payment</Button>
-          </Link>
+
+          <Button type='submit'>Continue to payment</Button>
         </form>
       </div>
     </div>

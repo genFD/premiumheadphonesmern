@@ -13,6 +13,7 @@ import ShippingInfo from './shippingInfo/ShippingInfo';
 import InfoSummary from './informationSummary/InfoSummary';
 import Message from './message/Message';
 import Loader from './loader/Loader';
+import BackButton from '../back_btn/Back_btn';
 export {
   Footer,
   Navbar,
@@ -29,4 +30,5 @@ export {
   InfoSummary,
   Message,
   Loader,
+  BackButton,
 };

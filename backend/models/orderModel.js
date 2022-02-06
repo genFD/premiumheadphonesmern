@@ -13,10 +13,10 @@ const orderSchema = mongoose.Schema(
           type: String,
           // required: true,
         },
-        qty: {
-          type: Number,
-          required: true,
-        },
+        // qty: {
+        //   type: Number,
+        //   required: true,
+        // },
         image: {
           type: String,
           required: true,
@@ -25,11 +25,11 @@ const orderSchema = mongoose.Schema(
           type: Number,
           required: true,
         },
-        product: {
-          type: mongoose.Schema.Types.ObjectId,
-          required: true,
-          ref: 'Product',
-        },
+        // product: {
+        //   type: mongoose.Schema.Types.ObjectId,
+        //   required: true,
+        //   ref: 'Product',
+        // },
       },
     ],
     shippingAddress: {

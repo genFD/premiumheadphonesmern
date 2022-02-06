@@ -1,16 +1,20 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCartContext } from '../../context/cart_context';
 import './infoSummary.css';
 
 const InfoSummary = () => {
+  const { shippingAddress } = useCartContext();
+  const navigate = useNavigate();
   return (
     <>
       <article className='container-info-summary'>
         <div className='info-summary contact'>
           <div className='info-summary-header'>
             <p className='info-summary-title'>Contact</p>
-            <button>Change</button>
+            <button onClick={() => navigate(-1)}>Change</button>
           </div>
-          <p>email@example.com</p>
+          <p>{shippingAddress.email}</p>
         </div>
 
         <div className='info-summary-divider'></div>
@@ -18,9 +22,17 @@ const InfoSummary = () => {
         <div className='info-summary ship'>
           <div className='info-summary-header'>
             <p className='info-summary-title'>Ship to</p>
-            <button>Change</button>
+            <button onClick={() => navigate(-1)}>Change</button>
           </div>
-          <p>10 Marsh Wall, London E14 9GU, United Kingdom</p>
+          <p>
+            {shippingAddress.address}
+            <span> </span>
+            {shippingAddress.city}
+            <span> </span>
+            {shippingAddress.country}
+            <span> </span>
+            {shippingAddress.postalCode}
+          </p>
         </div>
 
         <div className='info-summary-divider'></div>

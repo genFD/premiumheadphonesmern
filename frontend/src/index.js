@@ -5,16 +5,17 @@ import App from './App';
 import { ProductsProvider } from './context/products_context';
 import { CartProvider } from './context/cart_context';
 import { UserProvider } from './context/user_context';
+import { OrderProvider } from './context/order_context';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <UserProvider>
-      <ProductsProvider>
-        <CartProvider>
+  <UserProvider>
+    <ProductsProvider>
+      <CartProvider>
+        <OrderProvider>
           <App />
-        </CartProvider>
-      </ProductsProvider>
-    </UserProvider>
-  </React.StrictMode>,
+        </OrderProvider>
+      </CartProvider>
+    </ProductsProvider>
+  </UserProvider>,
   document.getElementById('root')
 );

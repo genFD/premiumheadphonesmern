@@ -2,13 +2,16 @@ import React, { useEffect, useContext, useReducer } from 'react';
 import axios from 'axios';
 import {
   ADD_TO_CART,
+  CART_SAVE_PAYMENT_METHOD,
+  CART_SAVE_SHIPPING_ADDRESS,
+  CLEAR_CART,
   COUNT_CART_TOTALS,
   REMOVE_CART_ITEM,
   TOGGLE_CART_ITEM_AMOUNT,
 } from '../actions';
 import reducer from '../reducers/cartReducers';
 
-const getLocalStorage = () => {
+const getCartFromLocalStorage = () => {
   let cart = localStorage.getItem('cart');
   if (cart) {
     return JSON.parse(localStorage.getItem('cart'));
@@ -16,12 +19,30 @@ const getLocalStorage = () => {
     return [];
   }
 };
+const getShippingAddressFromLocalStorage = () => {
+  let shippingAddress = localStorage.getItem('shippingAddress');
+  if (shippingAddress) {
+    return JSON.parse(localStorage.getItem('shippingAddress'));
+  } else {
+    return {};
+  }
+};
+const getpaymentMethodFromLocalStorage = () => {
+  let shippingAddress = localStorage.getItem('paymentMethod');
+  if (shippingAddress) {
+    return JSON.parse(localStorage.getItem('paymentMethod'));
+  } else {
+    return {};
+  }
+};
 const initialState = {
-  cart: getLocalStorage(),
+  cart: getCartFromLocalStorage(),
   total_items: 0,
   total_amount: 0,
   shipping: 534,
   taxes: 223,
+  shippingAddress: getShippingAddressFromLocalStorage(),
+  paymentMethod: getpaymentMethodFromLocalStorage(),
 };
 
 const CartContext = React.createContext();
@@ -63,10 +84,32 @@ export const CartProvider = ({ children }) => {
   const removeItem = (id) => {
     dispatch({ type: REMOVE_CART_ITEM, payload: id });
   };
+  const clearCart = () => {
+    dispatch({ type: CLEAR_CART });
+  };
+
   // toggle amount
   const updateAmount = (id, value) => {
     console.log(id, value);
     dispatch({ type: TOGGLE_CART_ITEM_AMOUNT, payload: { id, value } });
+  };
+
+  const saveShippingAddress = (data) => {
+    dispatch({
+      type: CART_SAVE_SHIPPING_ADDRESS,
+      payload: data,
+    });
+
+    localStorage.setItem('shippingAddress', JSON.stringify(data));
+  };
+
+  const savePaymentMethod = (data) => {
+    dispatch({
+      type: CART_SAVE_PAYMENT_METHOD,
+      payload: data,
+    });
+
+    localStorage.setItem('paymentMethod', JSON.stringify(data));
   };
 
   useEffect(() => {
@@ -75,7 +118,15 @@ export const CartProvider = ({ children }) => {
   }, [state.cart]);
   return (
     <CartContext.Provider
-      value={{ ...state, addToCart, removeItem, updateAmount }}>
+      value={{
+        ...state,
+        addToCart,
+        removeItem,
+        clearCart,
+        updateAmount,
+        saveShippingAddress,
+        savePaymentMethod,
+      }}>
       {children}
     </CartContext.Provider>
   );
