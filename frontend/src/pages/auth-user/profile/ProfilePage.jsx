@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { FaUserAstronaut } from 'react-icons/fa';
+import { FaTimes, FaUserAstronaut } from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { animated, Transition } from 'react-spring';
 import styled from 'styled-components';
 import { assets } from '../../../assets/assets';
 import { Loader, Message } from '../../../components';
+import { useOrderContext } from '../../../context/order_context';
 import { useUserContext } from '../../../context/user_context';
+import { formatPrice } from '../../../utils/helpers';
 
 const ProfilePage = () => {
   const [name, setName] = useState('');
@@ -26,12 +28,19 @@ const ProfilePage = () => {
     user_update_success: success,
   } = useUserContext();
 
+  const {
+    listMyOrders,
+    order_my_list_loading: loadingOrder,
+    order_my_list_error: errorOrders,
+  } = useOrderContext();
+
   useEffect(() => {
     if (!userInfo) {
       navigate('/login');
     } else {
       if (!user.name) {
         getUserDetails('profile');
+        listMyOrders();
       } else {
         setName(user.name);
         setEmail(user.email);
@@ -58,71 +67,71 @@ const ProfilePage = () => {
   ) : error ? (
     <Message className='error'>{error}</Message>
   ) : (
-    <Wrapper>
-      <section className='lg-container'>
-        <article className='profile-container lg-screen'>
+    <>
+      <Wrapper>
+        <section className='lg-container'>
+          <article className='profile-container lg-screen'>
+            <header className='profile-container-header'>
+              <div className='img-container'>
+                <FaUserAstronaut size='100' className='profile-icon' />
+              </div>
+              <span>{user.name}</span>
+              <ul className='profile-option-list'>
+                <li
+                  onClick={viewProfileHandler}
+                  className='profile-option-link'>
+                  <span>Edit Public profile</span>
+                </li>
+                <li onClick={viewOrdersHandler} className='profile-option-link'>
+                  <span>View orders</span>
+                </li>
+              </ul>
+            </header>
+
+            <div className='profile-orders-container'>
+              {showProfileInfo && (
+                <TransitionProfileInfo
+                  submitHandler={submitHandler}
+                  name={name}
+                  setName={setName}
+                  email={email}
+                  setEmail={setEmail}
+                  password={password}
+                  setPassword={setPassword}
+                />
+              )}
+              {showOrdersInfo && <TransitionProfileOrders />}
+            </div>
+          </article>
+        </section>
+
+        <section className='sm-screen-profile-container  sm-screen'>
           <header className='profile-container-header'>
             <div className='img-container'>
-              <FaUserAstronaut size='100' className='profile-icon' />
+              <FaUserAstronaut size='50' className='profile-icon' />
             </div>
             <span>{user.name}</span>
-            <ul className='profile-option-list'>
-              <li
-                onMouseOver={viewProfileHandler}
-                className='profile-option-link'>
-                <span>Edit Public profile</span>
-              </li>
-              <li
-                onMouseOver={viewOrdersHandler}
-                className='profile-option-link'>
-                <span>View orders</span>
-              </li>
-            </ul>
           </header>
-
-          <div className='profile-orders-container'>
-            {showProfileInfo && (
-              <TransitionProfileInfo
-                submitHandler={submitHandler}
-                name={name}
-                setName={setName}
-                email={email}
-                setEmail={setEmail}
-                password={password}
-                setPassword={setPassword}
-              />
-            )}
-            {showOrdersInfo && <TransitionProfileOrders />}
+          <div className='content-switch-btn-container'>
+            <button onClick={viewProfileHandler}>Edit Profile</button>
+            <button onClick={viewOrdersHandler}>Show Orders</button>
           </div>
-        </article>
-      </section>
-
-      <section className='sm-screen-profile-container  sm-screen'>
-        <header className='profile-container-header'>
-          <div className='img-container'>
-            <FaUserAstronaut size='50' className='profile-icon' />
-          </div>
-          <span>{user.name}</span>
-        </header>
-        <div className='content-switch-btn-container'>
-          <button onClick={viewProfileHandler}>Edit Profile</button>
-          <button onClick={viewOrdersHandler}>Show Orders</button>
-        </div>
-        {showProfileInfo && (
-          <TransitionProfileInfo
-            submitHandler={submitHandler}
-            name={name}
-            setName={setName}
-            email={email}
-            setEmail={setEmail}
-            password={password}
-            setPassword={setPassword}
-            success={success}
-          />
-        )}
-        {showOrdersInfo && <TransitionProfileOrders />}
-      </section>
-    </Wrapper>
+          {showProfileInfo && (
+            <TransitionProfileInfo
+              submitHandler={submitHandler}
+              name={name}
+              setName={setName}
+              email={email}
+              setEmail={setEmail}
+              password={password}
+              setPassword={setPassword}
+              success={success}
+            />
+          )}
+          {showOrdersInfo && <TransitionProfileOrders />}
+        </section>
+      </Wrapper>
+    </>
   );
 };
 
@@ -280,6 +289,12 @@ const ProfileInfo = ({
   );
 };
 const ProfileOrders = () => {
+  const {
+    myorders: orders,
+    order_my_list_loading: loading,
+    order_my_list_error: error,
+  } = useOrderContext();
+
   return (
     <article className='profile-form-container'>
       <header className='profile-form-container-header'>
@@ -288,19 +303,41 @@ const ProfileOrders = () => {
           <p>This is your orders</p>
         </div>
       </header>
-      <div className='form-container'>
-        <ul className='sm-screen-orders-content'>
-          <li>
-            <article className='order-content'>order1</article>
-          </li>
-          <li>
-            <article className='order-content'>order2</article>
-          </li>
-          <li>
-            <article className='order-content'>order3</article>
-          </li>
-        </ul>
-      </div>
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Message error='error'>There was an error</Message>
+      ) : (
+        <div className='form-container'>
+          <ul className='sm-screen-orders-content'>
+            {orders.map((order) => {
+              return (
+                <li key={order._id}>
+                  <article className='order-content'>
+                    <p>Id:{order._id}</p>
+                    <p>Created on: {order.createdAt.substring(0, 10)}</p>
+                    <p>Amount: {formatPrice(order.totalPrice)}</p>
+                    <p>
+                      Paid on:
+                      {order.isPaid ? (
+                        order.paidAt.substring(0, 10)
+                      ) : (
+                        <FaTimes style={{ color: 'red' }} />
+                      )}
+                    </p>
+                    <p>
+                      Delivered:
+                      {order.isDelivered
+                        ? order.deliveredAt.substring(0, 10)
+                        : '  No'}
+                    </p>
+                  </article>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
     </article>
   );
 };
@@ -309,6 +346,7 @@ export const Wrapper = styled.section`
   height: calc(100vh + 12rem);
   display: flex;
   justify-content: center;
+
   /* background: red; */
   /* align-items: center; */
 
@@ -447,6 +485,9 @@ export const Wrapper = styled.section`
     .profile-container-header {
       border: 1px solid var(--dark-slate);
     }
+    .sm-screen-orders-content {
+      flex-direction: row;
+    }
 
     .profile-orders-container {
       width: 100%;
@@ -459,6 +500,11 @@ export const Wrapper = styled.section`
     .profile-form-container {
       width: 100%;
     }
+    .sm-screen-orders-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
     .profile-option-link {
       display: block;
       text-align: left;
@@ -482,7 +528,7 @@ export const Wrapper = styled.section`
 
     .profile-container {
       margin-top: 6rem;
-      height: 70vh;
+      height: auto;
       width: 75vw;
       display: grid;
       grid-template-columns: 250px auto;

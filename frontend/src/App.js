@@ -31,7 +31,7 @@ function App() {
         <Route path='/products/:id' element={<SingleProduct />} />
         <Route path='/cart/*' element={<ShippingInformation />} />
         <Route path='/payment' element={<Payment />} />
-        <Route path='/confirmation' element={<OrderConfirmation />} />
+        <Route path='/confirmation/:id' element={<OrderConfirmation />} />
         <Route path='*' element={<Error />} />
       </Routes>
       <Footer />

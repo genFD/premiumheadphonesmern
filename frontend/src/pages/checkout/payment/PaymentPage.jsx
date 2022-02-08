@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 import { Link, useNavigate } from 'react-router-dom';
-
+import { PayPalButton } from 'react-paypal-button-v2';
 import {
   BackButton,
   ExpressCheckOut,
   InfoSummary,
+  Loader,
   Message,
 } from '../../../components';
 
@@ -13,10 +14,12 @@ import { Order, TransitionOrder } from '../orderSummary/Order';
 import styled from 'styled-components';
 import { useCartContext } from '../../../context/cart_context';
 import { useOrderContext } from '../../../context/order_context';
+import axios from 'axios';
 
 const PaymentPage = () => {
   const [showInfo, setShowInfo] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('PayPal');
+  const [sdkReady, setSdkReady] = useState(false);
 
   let w = window.innerWidth;
   const orderDisplayer = () => {
@@ -41,47 +44,51 @@ const PaymentPage = () => {
     orderDisplayer();
   });
 
+  const { shippingAddress } = useCartContext();
   const {
-    shippingAddress,
-    savePaymentMethod,
-    cart,
-    total_items,
-    total_amount,
-    shipping,
-    taxes,
-  } = useCartContext();
-
-  const totalPrice = total_amount + shipping + taxes;
-
-  const {
-    createOrder,
     order,
-    order_success: success,
-    order_loading: loading,
     order_error: error,
+    order_pay_loading: loadingPay,
+    order_pay_success: successPay,
+    payOrder,
+    payReset,
   } = useOrderContext();
+
   const navigate = useNavigate();
 
   if (!shippingAddress) {
     navigate('/shipping');
   }
   useEffect(() => {
-    if (success) {
-      navigate('/confirmation');
+    if (order.length === 0) {
+      navigate('/cart');
     }
-  });
+    const addPayPalScript = async () => {
+      const { data: clientId } = await axios.get('/api/config/paypal');
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
 
-  const submitHandler = () => {
-    // savePaymentMethod(paymentMethod);
-    createOrder({
-      orderItems: cart,
-      shippingAddress,
-      paymentMethod,
-      itemsPrice: total_amount,
-      shippingPrice: shipping,
-      taxPrice: taxes,
-      totalPrice: totalPrice,
-    });
+      script.async = true;
+      script.onload = () => {
+        setSdkReady(true);
+      };
+      document.body.appendChild(script);
+    };
+
+    if (successPay) {
+      navigate(`/confirmation/${order._id}`);
+    } else if (!order.isPaid) {
+      if (!window.paypal) {
+        addPayPalScript();
+      } else {
+        setSdkReady(true);
+      }
+    }
+  }, [order, successPay, order._id]);
+
+  const successPaymentHandler = (paymentResult) => {
+    payOrder(order._id, paymentResult);
   };
 
   return (
@@ -91,12 +98,20 @@ const PaymentPage = () => {
         <div className='container-checkout-shipping-info'>
           <InfoSummary />
           <div className='shipping-info'>
-            <ExpressCheckOut />
+            {loadingPay && <Loader />}
+            {!sdkReady ? (
+              <Loader />
+            ) : (
+              <PayPalButton
+                amount={order.totalPrice}
+                onSuccess={successPaymentHandler}
+              />
+            )}
           </div>
-          {error && <Message error='error'>There was an error</Message>}
-          <button onClick={submitHandler} className='btn' type='submit'>
+
+          {/* <button onClick={submitHandler} className='btn' type='submit'>
             Pay now
-          </button>
+          </button> */}
         </div>
         <button
           className={`showinfo ${showInfo ? 'showinfotrue' : 'showinfofalse'}`}

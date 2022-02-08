@@ -1,26 +1,54 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import {
+  useParams,
+  useLocation,
+  useNavigate,
+  Navigate,
+} from 'react-router-dom';
 import { useCartContext } from '../../../context/cart_context';
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 import { Order, TransitionOrder } from '../orderSummary/Order';
 
-import { BackButton, ShippingInfo } from '../../../components';
+import { BackButton, Message, ShippingInfo } from '../../../components';
 import styled from 'styled-components';
 import './informationPage.css';
+import { useOrderContext } from '../../../context/order_context';
 
 const InformationPage = () => {
   const { id } = useParams();
   const { search } = useLocation();
+  const Navigate = useNavigate();
   const quantity = search ? Number(search.split('=')[1]) : 1;
 
-  const { cart } = useCartContext();
-  // console.log(cart);
+  const {
+    cart,
+    total_amount,
+    shipping,
+    taxes,
+    shippingAddress,
+    savePaymentMethod,
+  } = useCartContext();
+  const {
+    createOrder,
+    order_success: success,
+    order_error: error,
+  } = useOrderContext();
+  const totalPrice = total_amount + shipping + taxes;
 
-  // useEffect(() => {
-  //   if (id) {
-  //     addToCart();
-  //   }
-  // }, [id, quantity]);
+  const createOrderHandler = () => {
+    createOrder({
+      orderItems: cart,
+      shippingAddress,
+      itemsPrice: total_amount,
+      shippingPrice: shipping,
+      taxPrice: taxes,
+      totalPrice: totalPrice,
+    });
+  };
+  if (success) {
+    Navigate('/payment');
+  }
+
   const [showInfo, setShowInfo] = useState(false);
   let w = window.innerWidth;
   const orderDisplayer = () => {
@@ -52,6 +80,10 @@ const InformationPage = () => {
         <div className='container-checkout-shipping-info'>
           <div className='shipping-info'>
             <ShippingInfo />
+            {error && <Message error='error'>There was an error</Message>}
+            <button onClick={createOrderHandler} className='btn' type='submit'>
+              Continue to payment
+            </button>
           </div>
         </div>
         <button

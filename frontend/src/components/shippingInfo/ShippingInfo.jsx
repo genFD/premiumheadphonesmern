@@ -130,8 +130,6 @@ const ShippingInfo = () => {
               </label>
             </div>
           </div>
-
-          <Button type='submit'>Continue to payment</Button>
         </form>
       </div>
     </div>

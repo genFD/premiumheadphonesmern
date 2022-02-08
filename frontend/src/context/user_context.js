@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import {
+  ORDER_LIST_MY_RESET,
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_RESET,
@@ -119,12 +120,12 @@ export const UserProvider = ({ children }) => {
     dispatch({
       type: USER_LOGOUT,
     });
-    // dispatch({
-    //   type: USER_DETAILS_RESET,
-    // });
-    // dispatch({
-    //   type: USER_LIST_RESET,
-    // });
+    dispatch({
+      type: USER_DETAILS_RESET,
+    });
+    dispatch({
+      type: ORDER_LIST_MY_RESET,
+    });
   };
 
   const getUserDetails = async (id) => {

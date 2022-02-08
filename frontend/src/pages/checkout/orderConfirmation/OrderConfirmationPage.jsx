@@ -3,8 +3,13 @@ import { Order, TransitionOrder } from '../orderSummary/Order';
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 import { ImCheckboxChecked } from 'react-icons/im';
 import './orderConfirmation.css';
-import { BackButton, InfoSummary } from '../../../components';
+import { BackButton, InfoSummary, Loader, Message } from '../../../components';
+
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
+import { useOrderContext } from '../../../context/order_context';
+import { useCartContext } from '../../../context/cart_context';
+import { useUserContext } from '../../../context/user_context';
 const OrderConfirmationPage = () => {
   const [showInfo, setShowInfo] = useState(false);
   let w = window.innerWidth;
@@ -29,19 +34,44 @@ const OrderConfirmationPage = () => {
   window.addEventListener('resize', () => {
     orderDisplayer();
   });
+  const { id } = useParams();
+  const { clearCart } = useCartContext();
+  const {
+    order_details_loading: loading,
+    order_details_error: error,
+    order,
+    order_details: details,
+    getOrderDetails,
+    payReset,
+  } = useOrderContext();
+  const { userInfo } = useUserContext();
 
-  return (
+  useEffect(() => {
+    getOrderDetails(id);
+    payReset();
+    clearCart();
+  }, []);
+  return loading ? (
+    <Loader />
+  ) : error ? (
+    <Message error='error'>There was an error </Message>
+  ) : (
     <Wrapper>
       <div className='section-center shipping-center'>
         <div className='container-checkout-shipping-info'>
           <InfoSummary />
           <div className='confirmed-message'>
-            <h2>Order Confirmed</h2>
             <ImCheckboxChecked
               className='confirmed-icon'
               size='40'
               color='#64ffda'
             />
+            <br />
+            <h3 style={{ color: '#64ffda', fontSize: '1rem' }}>
+              Thanks for your Order, {userInfo.name}
+              <br />
+              order confirmation ID: {id}
+            </h3>
           </div>
           {/* <div className='shipping-info'></div> */}
         </div>
@@ -77,6 +107,15 @@ const Wrapper = styled.div`
     padding-top: 3rem;
     margin-top: 8rem;
   }
+  h2 {
+    margin: 0;
+  }
+  h3 {
+    margin: 0;
+  }
+  p {
+    margin: 0;
+  }
   .order {
     border: 3px solid lightseagreen;
   }
@@ -104,6 +143,17 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+  }
+  .confirmed-message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .confirmed-message h3 {
+    margin: 0;
+    font-family: var(--bodyFont);
   }
 
   @media screen and (min-width: 768px) {

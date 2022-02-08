@@ -42,7 +42,7 @@ const Wrapper = styled.main`
     display: grid;
     width: 100%;
     height: 100%;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     place-items: center;
     gap: 20px;
     margin-top: 6rem;
@@ -51,7 +51,7 @@ const Wrapper = styled.main`
   }
   @media (min-width: 768px) {
     .products {
-      padding: 3rem;
+      padding: 1rem;
     }
   }
 `;
