@@ -12,6 +12,7 @@ import {
   Login,
   Register,
   Profile,
+  Users,
 } from './pages';
 import { Footer, Navbar } from './components';
 import SideDrawer from './components/side_drawer/SideDrawer';
@@ -27,6 +28,7 @@ function App() {
         <Route path='/profile' element={<Profile />} />
         <Route path='/' element={<Home />} />
         <Route path='/products' element={<ProductsList />} />
+        <Route path='/admin/users' element={<Users />} />
         <Route path='/about' element={<About />} />
         <Route path='/products/:id' element={<SingleProduct />} />
         <Route path='/cart/*' element={<ShippingInformation />} />

@@ -14,6 +14,7 @@ import InfoSummary from './informationSummary/InfoSummary';
 import Message from './message/Message';
 import Loader from './loader/Loader';
 import BackButton from '../back_btn/Back_btn';
+import Table from './table/Table';
 export {
   Footer,
   Navbar,
@@ -31,4 +32,5 @@ export {
   Message,
   Loader,
   BackButton,
+  Table,
 };

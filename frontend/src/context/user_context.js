@@ -19,6 +19,18 @@ import {
   USER_UPDATE_PROFILE_SUCCESS,
 } from '../actions';
 import reducer from '../reducers/userReducers';
+import { useNavigate } from 'react-router-dom';
+import {
+  USER_DELETE_FAIL,
+  USER_DELETE_REQUEST,
+  USER_DELETE_SUCCESS,
+  USER_LIST_FAIL,
+  USER_LIST_REQUEST,
+  USER_LIST_SUCCESS,
+  USER_UPDATE_FAIL,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
+} from '../constants/userConstants';
 
 const getLocalStorage = () => {
   let user = localStorage.getItem('userInfo');
@@ -39,6 +51,16 @@ const initialState = {
   user_update_loading: false,
   user_update_success: false,
   user_update_error: false,
+  user_list_loading: false,
+  users_list: [],
+  user_list_error: false,
+  user_delete_loading: false,
+  user_delete_success: false,
+  user_delete_error: false,
+  user_edit_loading: false,
+  user_edit_success: false,
+  user_edit_error: false,
+  user: {},
 };
 const UserContext = React.createContext();
 
@@ -54,7 +76,6 @@ export const UserProvider = ({ children }) => {
           'content-Type': 'Application/json',
         },
       };
-      console.log('dispatch login acivated');
       const { data } = await axios.post(
         '/api/users/login',
         { email, password },
@@ -114,9 +135,9 @@ export const UserProvider = ({ children }) => {
       });
     }
   };
-
   const logout = () => {
     localStorage.removeItem('userInfo');
+
     dispatch({
       type: USER_LOGOUT,
     });
@@ -124,7 +145,7 @@ export const UserProvider = ({ children }) => {
       type: USER_DETAILS_RESET,
     });
     dispatch({
-      type: ORDER_LIST_MY_RESET,
+      type: USER_DETAILS_RESET,
     });
   };
 
@@ -184,115 +205,108 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  // const listUsers = () => async (dispatch, getState) => {
-  //   try {
-  //     dispatch({
-  //       type: USER_LIST_REQUEST,
-  //     });
+  const listUsers = async () => {
+    try {
+      dispatch({
+        type: USER_LIST_REQUEST,
+      });
 
-  //     const {
-  //       userLogin: { userInfo },
-  //     } = getState();
+      const { userInfo } = state;
 
-  //     const config = {
-  //       headers: {
-  //         Authorization: `Bearer ${userInfo.token}`,
-  //       },
-  //     };
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.get(`/api/users`, config);
 
-  //     const { data } = await axios.get(`/api/users`, config);
+      dispatch({
+        type: USER_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout());
+      }
+      dispatch({
+        type: USER_LIST_FAIL,
+        payload: message,
+      });
+    }
+  };
 
-  //     dispatch({
-  //       type: USER_LIST_SUCCESS,
-  //       payload: data,
-  //     });
-  //   } catch (error) {
-  //     const message =
-  //       error.response && error.response.data.message
-  //         ? error.response.data.message
-  //         : error.message;
-  //     if (message === 'Not authorized, token failed') {
-  //       dispatch(logout());
-  //     }
-  //     dispatch({
-  //       type: USER_LIST_FAIL,
-  //       payload: message,
-  //     });
-  //   }
-  // };
+  const deleteUser = async (id) => {
+    try {
+      dispatch({
+        type: USER_DELETE_REQUEST,
+      });
 
-  // const deleteUser = (id) => async (dispatch, getState) => {
-  //   try {
-  //     dispatch({
-  //       type: USER_DELETE_REQUEST,
-  //     });
+      const { userInfo } = state;
 
-  //     const {
-  //       userLogin: { userInfo },
-  //     } = getState();
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
 
-  //     const config = {
-  //       headers: {
-  //         Authorization: `Bearer ${userInfo.token}`,
-  //       },
-  //     };
+      await axios.delete(`/api/users/${id}`, config);
 
-  //     await axios.delete(`/api/users/${id}`, config);
+      dispatch({ type: USER_DELETE_SUCCESS });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout());
+      }
+      dispatch({
+        type: USER_DELETE_FAIL,
+        payload: message,
+      });
+    }
+  };
 
-  //     dispatch({ type: USER_DELETE_SUCCESS });
-  //   } catch (error) {
-  //     const message =
-  //       error.response && error.response.data.message
-  //         ? error.response.data.message
-  //         : error.message;
-  //     if (message === 'Not authorized, token failed') {
-  //       dispatch(logout());
-  //     }
-  //     dispatch({
-  //       type: USER_DELETE_FAIL,
-  //       payload: message,
-  //     });
-  //   }
-  // };
+  const updateUser = async (user) => {
+    try {
+      dispatch({
+        type: USER_UPDATE_REQUEST,
+      });
 
-  // const updateUser = (user) => async (dispatch, getState) => {
-  //   try {
-  //     dispatch({
-  //       type: USER_UPDATE_REQUEST,
-  //     });
+      const { userInfo } = state;
 
-  //     const {
-  //       userLogin: { userInfo },
-  //     } = getState();
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
 
-  //     const config = {
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         Authorization: `Bearer ${userInfo.token}`,
-  //       },
-  //     };
+      const { data } = await axios.put(`/api/users/${user._id}`, user, config);
 
-  //     const { data } = await axios.put(`/api/users/${user._id}`, user, config);
+      dispatch({ type: USER_UPDATE_SUCCESS });
 
-  //     dispatch({ type: USER_UPDATE_SUCCESS });
+      dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
 
-  //     dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
-
-  //     dispatch({ type: USER_DETAILS_RESET });
-  //   } catch (error) {
-  //     const message =
-  //       error.response && error.response.data.message
-  //         ? error.response.data.message
-  //         : error.message;
-  //     if (message === 'Not authorized, token failed') {
-  //       dispatch(logout());
-  //     }
-  //     dispatch({
-  //       type: USER_UPDATE_FAIL,
-  //       payload: message,
-  //     });
-  //   }
-  // };
+      dispatch({ type: USER_DETAILS_RESET });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout());
+      }
+      dispatch({
+        type: USER_UPDATE_FAIL,
+        payload: message,
+      });
+    }
+  };
 
   return (
     <UserContext.Provider
@@ -303,6 +317,9 @@ export const UserProvider = ({ children }) => {
         register,
         getUserDetails,
         updateUserProfile,
+        listUsers,
+        deleteUser,
+        updateUser,
       }}>
       {children}
     </UserContext.Provider>

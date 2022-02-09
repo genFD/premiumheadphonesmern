@@ -33,7 +33,7 @@ const Wrapper = styled.div`
   }
   .error {
     background-color: crimson;
-    color: #0a192f;
+    color: white;
   }
   .success {
     background-color: #64ffda;

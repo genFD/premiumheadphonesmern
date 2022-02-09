@@ -41,7 +41,9 @@ const LoginPage = () => {
       <div className='login-container'>
         <div className='form-container'>
           <h1>Login</h1>
-          {error && <Message error='error'>{error}</Message>}
+          {error && (
+            <Message error='error'>Password or Email is incorrect</Message>
+          )}
           {loading && <Loader />}
           <form onSubmit={submitHandler}>
             <div className='form-control'>

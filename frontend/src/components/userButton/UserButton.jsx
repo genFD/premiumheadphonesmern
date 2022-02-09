@@ -56,14 +56,31 @@ const TransitionDropDown = ({ dropDown, setDropDown }) => {
 };
 
 const DropDown = ({ setDropDown }) => {
-  const { logout } = useUserContext();
+  const { logout, userInfo } = useUserContext();
   return (
     <DropDownWrapper>
       <article>
         <Link onClick={() => setDropDown(false)} to='/profile'>
           <span>Profile</span>
         </Link>
-        <span onClick={() => logout()}>Logout</span>
+        {userInfo && userInfo.isAdmin && (
+          <>
+            <Link to='/admin/users'>
+              <span>Users</span>
+            </Link>
+            <Link to='admin/products'>
+              <span>Products</span>
+            </Link>
+            <Link to='admin/orders'>
+              <span>Orders</span>
+            </Link>
+          </>
+        )}
+        <Link to='/login'>
+          <span style={{ color: 'tomato' }} onClick={() => logout()}>
+            Logout
+          </span>
+        </Link>
       </article>
     </DropDownWrapper>
   );
@@ -71,7 +88,7 @@ const DropDown = ({ setDropDown }) => {
 const DropDownWrapper = styled.div`
   article {
     width: 6rem;
-    height: 5rem;
+    height: auto;
     background: var(--light-navy);
 
     display: flex;

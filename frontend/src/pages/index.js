@@ -9,6 +9,7 @@ import About from './about/AboutPage.jsx';
 import Login from './auth-user/login/LoginPage';
 import Register from './auth-user/register/RegisterPage';
 import Profile from './auth-user/profile/ProfilePage';
+import Users from './admin/userList/UsersList';
 export {
   Home,
   SingleProduct,
@@ -21,4 +22,5 @@ export {
   Login,
   Register,
   Profile,
+  Users,
 };

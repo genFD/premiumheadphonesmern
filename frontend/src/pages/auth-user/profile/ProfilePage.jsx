@@ -46,7 +46,7 @@ const ProfilePage = () => {
         setEmail(user.email);
       }
     }
-  }, [navigate, userInfo, user]);
+  }, [userInfo, user]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -110,7 +110,7 @@ const ProfilePage = () => {
             <div className='img-container'>
               <FaUserAstronaut size='50' className='profile-icon' />
             </div>
-            <span>{user.name}</span>
+            {/* <span>{user.name}</span> */}
           </header>
           <div className='content-switch-btn-container'>
             <button onClick={viewProfileHandler}>Edit Profile</button>

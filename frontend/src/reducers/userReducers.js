@@ -67,6 +67,7 @@ const userReducer = (state, action) => {
 
     case USER_UPDATE_PROFILE_REQUEST:
       return { ...state, user_update_loading: true };
+
     case USER_UPDATE_PROFILE_SUCCESS:
       return {
         ...state,
@@ -74,6 +75,7 @@ const userReducer = (state, action) => {
         user_update_success: true,
         userInfo: action.payload,
       };
+
     case USER_UPDATE_PROFILE_FAIL:
       return {
         ...state,
@@ -81,53 +83,54 @@ const userReducer = (state, action) => {
         user_update_error: action.payload,
       };
 
+    case USER_LIST_REQUEST:
+      return { ...state, user_list_loading: true };
+    case USER_LIST_SUCCESS:
+      return { ...state, user_list_loading: false, users_list: action.payload };
+    case USER_LIST_FAIL:
+      return {
+        ...state,
+        user_list_loading: false,
+        user_list_error: action.payload,
+      };
+    case USER_LIST_RESET:
+      return { users_list: [] };
+
+    case USER_DELETE_REQUEST:
+      return { ...state, user_delete_loading: true };
+    case USER_DELETE_SUCCESS:
+      return {
+        ...state,
+        user_delete_loading: false,
+        user_delete_success: true,
+      };
+    case USER_DELETE_FAIL:
+      return {
+        user_delete_loading: false,
+        user_delete_error: action.payload,
+      };
+    case USER_UPDATE_REQUEST:
+      return { ...state, user_edit_loading: true };
+
+    case USER_UPDATE_SUCCESS:
+      return { ...state, user_edit_loading: false, user_edit_success: true };
+
+    case USER_UPDATE_FAIL:
+      return {
+        ...state,
+        user_edit_loading: false,
+        user_edit_error: action.payload,
+      };
+    case USER_UPDATE_RESET:
+      return {
+        user: {},
+      };
+
     default: {
       throw new Error(`No matching ${action.type} action type`);
     }
   }
 };
-
-// export const userUpdateProfileReducer = (state = {}, action) => {
-//   switch (action.type) {
-//     case USER_UPDATE_PROFILE_REQUEST:
-//       return { loading: true };
-//     case USER_UPDATE_PROFILE_SUCCESS:
-//       return { loading: false, success: true, userInfo: action.payload };
-//     case USER_UPDATE_PROFILE_FAIL:
-//       return { loading: false, error: action.payload };
-//     default: {
-//       return state;
-//     }
-//   }
-// };
-
-// export const userListReducer = (state = { users: [] }, action) => {
-//   switch (action.type) {
-//     case USER_LIST_REQUEST:
-//       return { loading: true };
-//     case USER_LIST_SUCCESS:
-//       return { loading: false, users: action.payload };
-//     case USER_LIST_FAIL:
-//       return { loading: false, error: action.payload };
-//     case USER_LIST_RESET:
-//       return { users: [] };
-//     default:
-//       return state;
-//   }
-// };
-
-// export const userDeleteReducer = (state = {}, action) => {
-//   switch (action.type) {
-//     case USER_DELETE_REQUEST:
-//       return { loading: true };
-//     case USER_DELETE_SUCCESS:
-//       return { loading: false, success: true };
-//     case USER_DELETE_FAIL:
-//       return { loading: false, error: action.payload };
-//     default:
-//       return state;
-//   }
-// };
 
 // export const userUpdateReducer = (state = { user: {} }, action) => {
 //   switch (action.type) {
