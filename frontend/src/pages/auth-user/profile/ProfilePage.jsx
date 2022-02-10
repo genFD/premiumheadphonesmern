@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FaTimes, FaUserAstronaut } from 'react-icons/fa';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { animated, Transition } from 'react-spring';
 import styled from 'styled-components';
 import { assets } from '../../../assets/assets';
@@ -12,11 +12,15 @@ import { formatPrice } from '../../../utils/helpers';
 const ProfilePage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [isAdmin, setIsAdmin] = useState('');
   const [password, setPassword] = useState('');
   const [showProfileInfo, setShowProfileInfo] = useState(true);
   const [showOrdersInfo, setShowOrdersInfo] = useState(false);
-  const location = useLocation();
+
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const { id } = useParams();
 
   const {
     userInfo,
@@ -41,6 +45,8 @@ const ProfilePage = () => {
       if (!user.name) {
         getUserDetails('profile');
         listMyOrders();
+      } else if (userInfo && location.pathname.includes('edit')) {
+        getUserDetails(id);
       } else {
         setName(user.name);
         setEmail(user.email);

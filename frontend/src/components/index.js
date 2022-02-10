@@ -13,8 +13,9 @@ import ShippingInfo from './shippingInfo/ShippingInfo';
 import InfoSummary from './informationSummary/InfoSummary';
 import Message from './message/Message';
 import Loader from './loader/Loader';
-import BackButton from '../back_btn/Back_btn';
+import BackButton from './button/back_btn/Back_btn';
 import Table from './table/Table';
+import TableProducts from './table/TableProducts';
 export {
   Footer,
   Navbar,
@@ -33,4 +34,5 @@ export {
   Loader,
   BackButton,
   Table,
+  TableProducts,
 };

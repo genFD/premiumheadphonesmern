@@ -68,10 +68,10 @@ const DropDown = ({ setDropDown }) => {
             <Link to='/admin/users'>
               <span>Users</span>
             </Link>
-            <Link to='admin/products'>
+            <Link to='/admin/products'>
               <span>Products</span>
             </Link>
-            <Link to='admin/orders'>
+            <Link to='/admin/orders'>
               <span>Orders</span>
             </Link>
           </>
@@ -98,6 +98,7 @@ const DropDownWrapper = styled.div`
     position: absolute;
     transition: var(--transition);
     border-bottom: 1px solid var(--green);
+    z-index: 1000;
   }
 
   span {

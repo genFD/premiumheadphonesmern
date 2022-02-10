@@ -10,6 +10,9 @@ import Login from './auth-user/login/LoginPage';
 import Register from './auth-user/register/RegisterPage';
 import Profile from './auth-user/profile/ProfilePage';
 import Users from './admin/userList/UsersList';
+import UserEdit from './admin/userEdit/UserEditPage';
+import ProductEdit from './admin/productEdit/ProductEditPage';
+import Products from './admin/productsList/ProductsList';
 export {
   Home,
   SingleProduct,
@@ -23,4 +26,7 @@ export {
   Register,
   Profile,
   Users,
+  UserEdit,
+  ProductEdit,
+  Products,
 };

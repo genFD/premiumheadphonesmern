@@ -1,51 +1,53 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FaCheck, FaEdit, FaTimes, FaTrash } from 'react-icons/fa';
+import { FaCheck, FaEdit, FaPlus, FaTimes, FaTrash } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
 import { useUserContext } from '../../context/user_context';
+import { formatPrice } from '../../utils/helpers';
+import { useProductsContext } from '../../context/products_context';
 
-const Table = ({ users }) => {
-  const { deleteUser } = useUserContext();
+const TableProducts = ({ products }) => {
+  const { deleteProduct, createProduct } = useProductsContext();
 
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure?')) {
-      deleteUser(id);
+      deleteProduct(id);
     }
+  };
+  const createHandler = () => {
+    createProduct();
   };
   return (
     <Wrapper>
-      <h3>Users</h3>
+      <header>
+        <h3>PRODUCTS</h3>
+        <button onClick={createHandler} className='btn'>
+          <FaPlus /> Create product
+        </button>
+      </header>
+
       <table>
         <thead>
           <tr>
             <th>ID</th>
             <th>NAME</th>
-            <th>EMAIL</th>
-            <th>ADMIN</th>
+            <th>PRICE</th>
+            <th>CATEGORY</th>
+            <th>BRAND</th>
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => {
+          {products.map((product) => {
             return (
-              <tr key={user._id}>
-                <td>{user._id}</td>
-                <td>{user.name}</td>
-                <td>
-                  <a href={`mailto:${user.email}`}>{user.email}</a>
-                </td>
-                <td
-                  className={`status ${
-                    user.isAdmin ? 'status_green' : 'status_red'
-                  }`}>
-                  {user.isAdmin ? (
-                    <FaCheck style={{ color: 'green' }} />
-                  ) : (
-                    <FaTimes style={{ color: 'red' }} />
-                  )}
-                </td>
+              <tr key={product._id}>
+                <td>{product._id}</td>
+                <td>{product.name}</td>
+                <td>{formatPrice(product.price)}</td>
+                <td>{product.category}</td>
+                <td>{product.brand}</td>
 
                 <td>
-                  <Link to={`/admin/user/${user._id}/edit`}>
+                  <Link to={`/admin/product/${product._id}/edit`}>
                     <button className='btn-style edit-btn'>
                       <FaEdit />
                     </button>
@@ -53,7 +55,7 @@ const Table = ({ users }) => {
                   <button
                     className='btn-style delete-btn'
                     variant='danger'
-                    onClick={() => deleteHandler(user._id)}>
+                    onClick={() => deleteHandler(product._id)}>
                     <FaTrash />
                   </button>
                 </td>
@@ -67,12 +69,25 @@ const Table = ({ users }) => {
 };
 
 const Wrapper = styled.div`
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  h3 {
+    margin: 0;
+  }
+  button {
+    /* margin-bottom: 1rem; */
+  }
   table {
     border-collapse: collapse;
     box-shadow: 0 5px 10px var(--dark-navy);
     background: var(--light-navy);
     text-align: left;
     overflow: hidden;
+    margin-top: 1rem;
 
     thead {
       box-shadow: 0 5px 10px var(--dark-navy);
@@ -122,4 +137,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default Table;
+export default TableProducts;

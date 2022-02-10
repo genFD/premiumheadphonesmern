@@ -19,4 +19,10 @@ export const assets = {
   lastName: 'Last Name',
   phone: 'Phone',
   password: 'Password',
+  price: 'Price',
+  description: 'Description',
+  image: 'Image',
+  brand: 'Brand',
+  countInStock: 'Count In Stock',
+  category: 'category',
 };

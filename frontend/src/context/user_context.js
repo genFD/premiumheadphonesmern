@@ -17,6 +17,7 @@ import {
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
+  USER_UPDATE_RESET,
 } from '../actions';
 import reducer from '../reducers/userReducers';
 import { useNavigate } from 'react-router-dom';
@@ -145,7 +146,7 @@ export const UserProvider = ({ children }) => {
       type: USER_DETAILS_RESET,
     });
     dispatch({
-      type: USER_DETAILS_RESET,
+      type: USER_LIST_RESET,
     });
   };
 
@@ -293,6 +294,7 @@ export const UserProvider = ({ children }) => {
       dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
 
       dispatch({ type: USER_DETAILS_RESET });
+      // dispatch({ type: USER_UPDATE_RESET });
     } catch (error) {
       const message =
         error.response && error.response.data.message

@@ -11,6 +11,13 @@ import {
   GET_SINGLE_PRODUCT_FAILED,
   HIDE_NAVBAR,
   SHOW_NAVBAR,
+  PRODUCT_DELETE_REQUEST,
+  PRODUCT_DELETE_SUCCESS,
+  PRODUCT_DELETE_FAIL,
+  PRODUCT_CREATE_REQUEST,
+  PRODUCT_CREATE_SUCCESS,
+  PRODUCT_CREATE_FAIL,
+  PRODUCT_CREATE_RESET,
 } from '../actions';
 
 const productsListReducer = (state, action) => {
@@ -76,44 +83,43 @@ const productsListReducer = (state, action) => {
         single_product_error: true,
       };
     }
+    case PRODUCT_DELETE_REQUEST:
+      return { ...state, product_delete_loading: true };
+    case PRODUCT_DELETE_SUCCESS:
+      return {
+        ...state,
+        product_delete_loading: false,
+        product_delete_success: true,
+      };
+    case PRODUCT_DELETE_FAIL:
+      return {
+        ...state,
+        product_delete_loading: false,
+        product_delete_error: action.payload,
+      };
+    case PRODUCT_CREATE_REQUEST:
+      return { ...state, product_create_loading: true };
+    case PRODUCT_CREATE_SUCCESS:
+      return {
+        ...state,
+        product_create_loading: false,
+        product_create_success: true,
+        product: action.payload,
+      };
+    case PRODUCT_CREATE_FAIL:
+      return {
+        ...state,
+        product_create_loading: false,
+        product_create_error: action.payload,
+      };
+    case PRODUCT_CREATE_RESET:
+      return {};
+
     default: {
       throw new Error(`No matching ${action.type} action type`);
     }
   }
 };
-
-// export const productDetailsReducer = (
-//   state = { product: { reviews: [] } },
-//   action
-// ) => {
-//   switch (action.type) {
-//     case PRODUCT_DETAILS_REQUEST: {
-//       return { loading: true, ...state };
-//     }
-//     case PRODUCT_DETAILS_SUCCESS: {
-//       return { loading: false, product: action.payload };
-//     }
-//     case PRODUCT_DETAILS_FAIL: {
-//       return { loading: false, error: action.payload };
-//     }
-//     default: {
-//       return state;
-//     }
-//   }
-// };
-
-// export const productDeleteReducer = (state = {}, action) => {
-//   switch (action.type) {
-//     case PRODUCT_DELETE_REQUEST:
-//       return { loading: true };
-//     case PRODUCT_DELETE_SUCCESS:
-//       return { loading: false, success: true };
-//     case PRODUCT_DELETE_FAIL:
-//       return { loading: false, error: action.payload };
-//     default:
-//       return state;
-//   }
-// };
 
 // export const productCreateReducer = (state = {}, action) => {
 //   switch (action.type) {
