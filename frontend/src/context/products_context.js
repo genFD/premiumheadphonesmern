@@ -24,6 +24,7 @@ import {
   PRODUCT_UPDATE_REQUEST,
   PRODUCT_UPDATE_SUCCESS,
   PRODUCT_UPDATE_FAIL,
+  PRODUCT_UPDATE_RESET,
 } from '../actions';
 
 import reducer from '../reducers/productReducers';
@@ -52,6 +53,9 @@ const initialState = {
   product_edit_loading: false,
   product_edit_success: false,
   product_edit_error: false,
+  product_update_loading: false,
+  product_update_success: false,
+  product_update_error: false,
 };
 
 const ProductsContext = createContext();
@@ -198,7 +202,7 @@ const ProductsProvider = ({ children }) => {
         type: PRODUCT_UPDATE_SUCCESS,
         payload: data,
       });
-      dispatch({ type: GET_SINGLE_PRODUCT_SUCCESS, payload: data });
+      // dispatch({ type: GET_SINGLE_PRODUCT_SUCCESS, payload: data });
     } catch (error) {
       const message =
         error.response && error.response.data.message
@@ -212,6 +216,9 @@ const ProductsProvider = ({ children }) => {
         payload: message,
       });
     }
+  };
+  const resetUpdatedProduct = () => {
+    dispatch({ type: PRODUCT_UPDATE_RESET });
   };
 
   useEffect(() => {
@@ -233,6 +240,7 @@ const ProductsProvider = ({ children }) => {
         deleteProduct,
         createProduct,
         updateProduct,
+        resetUpdatedProduct,
       }}>
       {children}
     </ProductsContext.Provider>

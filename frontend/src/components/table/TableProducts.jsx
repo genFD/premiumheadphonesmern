@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FaCheck, FaEdit, FaPlus, FaTimes, FaTrash } from 'react-icons/fa';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useUserContext } from '../../context/user_context';
 import { formatPrice } from '../../utils/helpers';
 import { useProductsContext } from '../../context/products_context';
+import { useEffect } from 'react';
 
-const TableProducts = ({ products }) => {
-  const { deleteProduct, createProduct } = useProductsContext();
+const TableProducts = () => {
+  const { products, deleteProduct, createProduct } = useProductsContext();
 
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure?')) {
@@ -45,7 +46,6 @@ const TableProducts = ({ products }) => {
                 <td>{formatPrice(product.price)}</td>
                 <td>{product.category}</td>
                 <td>{product.brand}</td>
-
                 <td>
                   <Link to={`/admin/product/${product._id}/edit`}>
                     <button className='btn-style edit-btn'>

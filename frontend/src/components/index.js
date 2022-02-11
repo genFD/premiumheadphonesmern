@@ -16,6 +16,16 @@ import Loader from './loader/Loader';
 import BackButton from './button/back_btn/Back_btn';
 import Table from './table/Table';
 import TableProducts from './table/TableProducts';
+import Form from './multiStepsForm/Form';
+
+import Name from './multiStepsForm/ProductName';
+import Brand from './multiStepsForm/ProductBrand';
+import Category from './multiStepsForm/ProductCategory';
+import Price from './multiStepsForm/ProductPrice';
+import Description from './multiStepsForm/ProductDescription';
+import CountInStock from './multiStepsForm/ProductCountInStock';
+import Image from './multiStepsForm/ProductImage';
+
 export {
   Footer,
   Navbar,
@@ -35,4 +45,12 @@ export {
   BackButton,
   Table,
   TableProducts,
+  Form,
+  Name,
+  Brand,
+  Category,
+  Description,
+  Price,
+  CountInStock,
+  Image,
 };

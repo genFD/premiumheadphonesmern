@@ -53,7 +53,7 @@ const ProductsList = () => {
         <Message error='error'>There was an error</Message>
       ) : (
         <article className='main'>
-          <TableProducts products={products} />
+          <TableProducts />
         </article>
       )}
     </Wrapper>
