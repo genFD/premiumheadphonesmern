@@ -49,7 +49,6 @@ const OrderConfirmationPage = () => {
   useEffect(() => {
     getOrderDetails(id);
     payReset();
-    clearCart();
   }, []);
   return loading ? (
     <Loader />

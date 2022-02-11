@@ -16,6 +16,7 @@ import Loader from './loader/Loader';
 import BackButton from './button/back_btn/Back_btn';
 import Table from './table/Table';
 import TableProducts from './table/TableProducts';
+import TableOrders from './table/TableOrders';
 import Form from './multiStepsForm/Form';
 
 import Name from './multiStepsForm/ProductName';
@@ -53,4 +54,5 @@ export {
   Price,
   CountInStock,
   Image,
+  TableOrders,
 };

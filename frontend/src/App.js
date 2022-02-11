@@ -16,7 +16,9 @@ import {
   UserEdit,
   ProductEdit,
   Products,
+  Orders,
 } from './pages';
+
 import { Footer, Navbar } from './components';
 import SideDrawer from './components/side_drawer/SideDrawer';
 
@@ -32,6 +34,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/products' element={<ProductsList />} />
         <Route path='/admin/users' element={<Users />} />
+        <Route path='/admin/orders' element={<Orders />} />
         <Route path='/admin/products' element={<Products />} />
         <Route path='/admin/product/:id/edit' element={<ProductEdit />} />
         <Route path='/admin/user/:id/edit' element={<UserEdit />} />

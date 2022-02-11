@@ -43,7 +43,6 @@ const initialState = {
   single_product_loading: false,
   single_product_error: false,
   single_product: {},
-  product: {},
   product_create_loading: false,
   product_create_success: false,
   product_create_error: false,

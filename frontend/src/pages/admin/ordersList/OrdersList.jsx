@@ -1,32 +1,28 @@
 import React, { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { Loader, Message } from '../../../components';
-import { Table } from '../../../components';
+import { Loader, Message, TableOrders } from '../../../components';
+
 import { useOrderContext } from '../../../context/order_context';
 import { useUserContext } from '../../../context/user_context';
 
-const UsersList = () => {
+const OrdersList = () => {
   const navigate = useNavigate();
   const {
-    user_list_loading: loading,
-    users_list: users,
-    user_list_error: error,
-    listUsers,
-    userInfo,
-    user_delete_success: successdelete,
-  } = useUserContext();
-  const { order } = useOrderContext();
-  console.log(order);
+    orders_list_loading: loading,
+    orders_list_error: error,
+    listOrders,
+    order_deliver_success: successDeliver,
+  } = useOrderContext();
+  const { userInfo } = useUserContext();
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
-      listUsers();
+      listOrders();
     } else {
       navigate('/login');
     }
-  }, [successdelete]);
-
+  }, [userInfo, successDeliver]);
   return (
     <Wrapper>
       {loading ? (
@@ -35,7 +31,7 @@ const UsersList = () => {
         <Message error='error'>There was an error</Message>
       ) : (
         <article className='main'>
-          <Table users={users} />
+          <TableOrders />
         </article>
       )}
     </Wrapper>
@@ -52,5 +48,4 @@ const Wrapper = styled.main`
     /* margin-top: 8rem; */
   }
 `;
-
-export default UsersList;
+export default OrdersList;

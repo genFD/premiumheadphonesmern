@@ -66,8 +66,8 @@ const ProductEditPage = () => {
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append('image', file);
+    const imageData = new FormData();
+    imageData.append('image', file);
     setUploading(true);
 
     try {
@@ -77,7 +77,7 @@ const ProductEditPage = () => {
         },
       };
 
-      const { data } = await axios.post('/api/upload', formData, config);
+      const { data } = await axios.post('/api/upload', imageData, config);
       setFormData({
         ...formData,
         image: data,
@@ -111,6 +111,9 @@ const ProductEditPage = () => {
         setFormData={setFormData}
         formData={formData}
         submitHandler={submitHandler}
+        uploadFileHandler={uploadFileHandler}
+        uploading={uploading}
+        setUploading={setUploading}
       />
     </Wrapper>
   );

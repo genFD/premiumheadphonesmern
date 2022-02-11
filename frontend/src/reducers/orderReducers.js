@@ -2,13 +2,20 @@ import {
   ORDER_CREATE_FAIL,
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
+  ORDER_DELIVER_FAIL,
+  ORDER_DELIVER_REQUEST,
+  ORDER_DELIVER_RESET,
+  ORDER_DELIVER_SUCCESS,
   ORDER_DETAILS_FAIL,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
+  ORDER_LIST_FAIL,
   ORDER_LIST_MY_FAIL,
   ORDER_LIST_MY_REQUEST,
   ORDER_LIST_MY_RESET,
   ORDER_LIST_MY_SUCCESS,
+  ORDER_LIST_REQUEST,
+  ORDER_LIST_SUCCESS,
   ORDER_PAY_FAIL,
   ORDER_PAY_REQUEST,
   ORDER_PAY_RESET,
@@ -82,6 +89,39 @@ const orderReducer = (state, action) => {
       };
     case ORDER_LIST_MY_RESET:
       return { myorders: [] };
+    case ORDER_LIST_REQUEST:
+      return {
+        ...state,
+        order_list_loading: true,
+      };
+    case ORDER_LIST_SUCCESS:
+      return {
+        ...state,
+        order_list_loading: false,
+        orders: action.payload,
+      };
+    case ORDER_LIST_FAIL:
+      return {
+        ...state,
+        order_list_loading: false,
+        order_list_error: action.payload,
+      };
+    case ORDER_DELIVER_REQUEST:
+      return {
+        order_deliver_loading: true,
+      };
+    case ORDER_DELIVER_SUCCESS:
+      return {
+        order_deliver_loading: false,
+        order_deliver_success: true,
+      };
+    case ORDER_DELIVER_FAIL:
+      return {
+        order_deliver_loading: false,
+        order_deliver_error: action.payload,
+      };
+    case ORDER_DELIVER_RESET:
+      return {};
 
     default: {
       throw new Error(`No matching ${action.type} action type`);

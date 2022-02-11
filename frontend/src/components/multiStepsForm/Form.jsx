@@ -10,7 +10,14 @@ import {
   Image,
   CountInStock,
 } from '..';
-const Form = ({ formData, setFormData, submitHandler }) => {
+const Form = ({
+  formData,
+  setFormData,
+  submitHandler,
+  uploadFileHandler,
+  uploading,
+  setUploading,
+}) => {
   const [page, setPage] = useState(0);
   // const [formData, setFormData] = useState({
   //   name: '',
@@ -42,7 +49,13 @@ const Form = ({ formData, setFormData, submitHandler }) => {
     ) : page === 4 ? (
       <Price formData={formData} setFormData={setFormData} />
     ) : page === 5 ? (
-      <Image formData={formData} setFormData={setFormData} />
+      <Image
+        formData={formData}
+        setFormData={setFormData}
+        uploadFileHandler={uploadFileHandler}
+        uploading={uploading}
+        setUploading={setUploading}
+      />
     ) : (
       <CountInStock formData={formData} setFormData={setFormData} />
     );

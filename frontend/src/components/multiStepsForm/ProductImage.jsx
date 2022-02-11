@@ -1,12 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Loader } from '..';
 
-const ProductImage = ({ formData, setFormData }) => {
+const ProductImage = ({
+  formData,
+  setFormData,
+  uploadFileHandler,
+  uploading,
+  setUploading,
+}) => {
   return (
     <Wrapper>
       <input
         type='text'
-        accept='image/png,image/jpeg, image/jpg'
         value={formData.image}
         onChange={(e) =>
           setFormData({
@@ -15,11 +21,22 @@ const ProductImage = ({ formData, setFormData }) => {
           })
         }
       />
+      <label>Select a file:</label>
+      <input
+        type='file'
+        accept='image/png,image/jpeg, image/jpg'
+        id='image-file'
+        label='Choose File'
+        onChange={uploadFileHandler}></input>
+      {uploading && <Loader />}
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
   .form-control {
     position: relative;
     margin: 40px 40px;

@@ -7,12 +7,18 @@ import {
   ORDER_CREATE_FAIL,
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
+  ORDER_DELIVER_FAIL,
+  ORDER_DELIVER_REQUEST,
+  ORDER_DELIVER_SUCCESS,
   ORDER_DETAILS_FAIL,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
+  ORDER_LIST_FAIL,
   ORDER_LIST_MY_FAIL,
   ORDER_LIST_MY_REQUEST,
   ORDER_LIST_MY_SUCCESS,
+  ORDER_LIST_REQUEST,
+  ORDER_LIST_SUCCESS,
   ORDER_PAY_FAIL,
   ORDER_PAY_REQUEST,
   ORDER_PAY_RESET,
@@ -38,9 +44,15 @@ const initialState = {
   order_pay_error: false,
   order_pay_loading: false,
   order_pay_success: false,
+  order_deliver_error: false,
+  order_deliver_loading: false,
+  order_deliver_success: false,
   order_my_list_loading: false,
   myorders: [],
   order_my_list_error: false,
+  order_list_loading: false,
+  orders: [],
+  order_list_error: false,
 };
 
 const OrderContext = React.createContext();
@@ -175,6 +187,76 @@ export const OrderProvider = ({ children }) => {
     }
   };
 
+  const listOrders = async () => {
+    try {
+      dispatch({
+        type: ORDER_LIST_REQUEST,
+      });
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.get(`/api/orders`, config);
+
+      dispatch({
+        type: ORDER_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout());
+      }
+      dispatch({
+        type: ORDER_LIST_FAIL,
+        payload: message,
+      });
+    }
+  };
+
+  const deliverOrder = async (order) => {
+    try {
+      dispatch({
+        type: ORDER_DELIVER_REQUEST,
+      });
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.put(
+        `/api/orders/${order._id}/deliver`,
+        {},
+        config
+      );
+
+      dispatch({
+        type: ORDER_DELIVER_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout());
+      }
+      dispatch({
+        type: ORDER_DELIVER_FAIL,
+        payload: message,
+      });
+    }
+  };
+
   return (
     <OrderContext.Provider
       value={{
@@ -184,6 +266,8 @@ export const OrderProvider = ({ children }) => {
         payOrder,
         payReset,
         listMyOrders,
+        listOrders,
+        deliverOrder,
       }}>
       {children}
     </OrderContext.Provider>

@@ -47,7 +47,6 @@ const Wrapper = styled.main`
     gap: 20px;
     margin-top: 6rem;
     padding: 1rem;
-    border: 1px solid red;
   }
   @media (min-width: 768px) {
     .products {

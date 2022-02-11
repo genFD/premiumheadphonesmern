@@ -93,7 +93,9 @@ const PaymentPage = () => {
 
   return (
     <Wrapper>
-      <BackButton />
+      <Link to='/cart'>
+        <BackButton />
+      </Link>
       <div className='section-center shipping-center'>
         <div className='container-checkout-shipping-info'>
           <InfoSummary />

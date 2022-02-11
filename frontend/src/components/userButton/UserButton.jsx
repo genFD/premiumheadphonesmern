@@ -4,6 +4,7 @@ import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 import { Link } from 'react-router-dom';
 import { animated, Transition } from 'react-spring';
 import styled from 'styled-components';
+import { useCartContext } from '../../context/cart_context';
 import { useUserContext } from '../../context/user_context';
 
 const UserButton = ({ title }) => {
@@ -57,6 +58,12 @@ const TransitionDropDown = ({ dropDown, setDropDown }) => {
 
 const DropDown = ({ setDropDown }) => {
   const { logout, userInfo } = useUserContext();
+  const { clearCart } = useCartContext();
+  const handleLogout = () => {
+    logout();
+    clearCart();
+  };
+
   return (
     <DropDownWrapper>
       <article>
@@ -77,7 +84,7 @@ const DropDown = ({ setDropDown }) => {
           </>
         )}
         <Link to='/login'>
-          <span style={{ color: 'tomato' }} onClick={() => logout()}>
+          <span style={{ color: 'tomato' }} onClick={handleLogout}>
             Logout
           </span>
         </Link>

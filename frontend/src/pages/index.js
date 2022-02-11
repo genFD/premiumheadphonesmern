@@ -13,6 +13,7 @@ import Users from './admin/userList/UsersList';
 import UserEdit from './admin/userEdit/UserEditPage';
 import ProductEdit from './admin/productEdit/ProductEditPage';
 import Products from './admin/productsList/ProductsList';
+import Orders from './admin/ordersList/OrdersList';
 export {
   Home,
   SingleProduct,
@@ -29,4 +30,5 @@ export {
   UserEdit,
   ProductEdit,
   Products,
+  Orders,
 };

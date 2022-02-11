@@ -25,13 +25,14 @@ const SingleProductPage = () => {
     single_product_error: error,
     single_product: product,
     fetchSingleProduct,
+    products,
   } = useProductsContext();
 
   const { addToCart, cart } = useCartContext();
 
   useEffect(() => {
     fetchSingleProduct(id);
-  }, []);
+  }, [id]);
 
   const addToCartHandler = () => {
     navigate(`/cart/${id}?qty=${quantity}`);
@@ -119,6 +120,7 @@ const Wrapper = styled.section`
     margin-bottom: 3rem;
     margin-top: 5rem;
   }
+
   .product-photo {
     border-radius: 1rem;
     box-shadow: var(--shadow-4);
