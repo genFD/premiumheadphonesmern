@@ -82,8 +82,9 @@ const cartReducer = (state, action) => {
         ...state,
         paymentMethod: action.payload,
       };
-    default:
-      return state;
+    default: {
+      throw new Error(`No matching ${action.type} action type`);
+    }
   }
 };
 export default cartReducer;

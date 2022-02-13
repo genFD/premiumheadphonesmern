@@ -7,6 +7,7 @@ import uploadRoutes from './routes/uploadRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
+import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 connectDB();
 const app = express();
@@ -14,7 +15,7 @@ app.use(express.json());
 
 dotenv.config();
 app.get('/', (req, res) => {
-  res.send('api is runningfejhfjfedf');
+  res.send('api is running');
 });
 
 app.use('/api/products', productRoutes);
@@ -39,6 +40,8 @@ app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 //     res.send('API is running....');
 //   });
 // }
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 8000;
 app.listen(

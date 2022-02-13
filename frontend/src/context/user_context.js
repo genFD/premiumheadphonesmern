@@ -131,22 +131,22 @@ export const UserProvider = ({ children }) => {
       });
     }
   };
+
   const resetUserProfile = () => {
     dispatch({ type: USER_UPDATE_PROFILE_RESET });
   };
   const logout = () => {
     localStorage.removeItem('userInfo');
-
     dispatch({
       type: USER_LOGOUT,
     });
-    dispatch({
-      type: USER_DETAILS_RESET,
-    });
-    dispatch({
-      type: USER_LIST_RESET,
-    });
-    resetUserProfile();
+    // dispatch({
+    //   type: USER_DETAILS_RESET,
+    // });
+    // dispatch({
+    //   type: USER_LIST_RESET,
+    // });
+    // resetUserProfile();
   };
 
   const getUserDetails = async (id) => {

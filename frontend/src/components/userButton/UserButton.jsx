@@ -129,13 +129,14 @@ const Wrapper = styled.div`
     &:hover {
       color: var(--green);
     }
+    /* border: 1px solid red; */
   }
 
   .login-value {
     /* border: 1px solid red; */
     position: absolute;
     top: -10px;
-    right: -75px;
+    right: -45px;
     background: var(--clr-primary-5);
     width: auto;
     height: 16px;
