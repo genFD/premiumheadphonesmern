@@ -16,6 +16,7 @@ import {
   USER_REGISTER_SUCCESS,
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_REQUEST,
+  USER_UPDATE_PROFILE_RESET,
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_RESET,
 } from '../actions';
@@ -33,40 +34,35 @@ import {
   USER_UPDATE_SUCCESS,
 } from '../constants/userConstants';
 
-const getLocalStorage = () => {
-  let user = localStorage.getItem('userInfo');
-  if (user) {
-    return JSON.parse(localStorage.getItem('userInfo'));
-  } else {
-    return null;
-  }
-};
+const userInfoFromStorage = localStorage.getItem('userInfo')
+  ? JSON.parse(localStorage.getItem('userInfo'))
+  : null;
 
 const initialState = {
-  user_loading: false,
-  user_error: false,
-  userInfo: getLocalStorage(),
+  userInfo: userInfoFromStorage,
+  user_login_loading: false,
+  user_login_error: false,
+  user_register_loading: false,
+  user_register_error: false,
   user_details: {},
   user_details_loading: false,
   user_details_error: false,
-  user_update_loading: false,
-  user_update_success: false,
-  user_update_error: false,
+  user_update_profile_loading: false,
+  user_update_profile_success: false,
+  user_update_profile_error: false,
   user_list_loading: false,
   users_list: [],
   user_list_error: false,
   user_delete_loading: false,
   user_delete_success: false,
   user_delete_error: false,
-  user_edit_loading: false,
-  user_edit_success: false,
-  user_edit_error: false,
   user: {},
 };
 const UserContext = React.createContext();
 
 export const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
   const login = async (email, password) => {
     try {
       dispatch({
@@ -74,7 +70,7 @@ export const UserProvider = ({ children }) => {
       });
       const config = {
         headers: {
-          'content-Type': 'Application/json',
+          'Content-Type': 'application/json',
         },
       };
       const { data } = await axios.post(
@@ -86,7 +82,6 @@ export const UserProvider = ({ children }) => {
         type: USER_LOGIN_SUCCESS,
         payload: data,
       });
-
       localStorage.setItem('userInfo', JSON.stringify(data));
     } catch (error) {
       dispatch({
@@ -136,6 +131,9 @@ export const UserProvider = ({ children }) => {
       });
     }
   };
+  const resetUserProfile = () => {
+    dispatch({ type: USER_UPDATE_PROFILE_RESET });
+  };
   const logout = () => {
     localStorage.removeItem('userInfo');
 
@@ -148,6 +146,7 @@ export const UserProvider = ({ children }) => {
     dispatch({
       type: USER_LIST_RESET,
     });
+    resetUserProfile();
   };
 
   const getUserDetails = async (id) => {
@@ -195,6 +194,11 @@ export const UserProvider = ({ children }) => {
         type: USER_UPDATE_PROFILE_SUCCESS,
         payload: data,
       });
+      dispatch({
+        type: USER_LOGIN_SUCCESS,
+        payload: data,
+      });
+      localStorage.setItem('userInfo', JSON.stringify(data));
     } catch (error) {
       dispatch({
         type: USER_UPDATE_PROFILE_FAIL,
@@ -322,6 +326,7 @@ export const UserProvider = ({ children }) => {
         listUsers,
         deleteUser,
         updateUser,
+        resetUserProfile,
       }}>
       {children}
     </UserContext.Provider>

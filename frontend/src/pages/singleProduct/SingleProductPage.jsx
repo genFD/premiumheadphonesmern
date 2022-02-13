@@ -88,7 +88,7 @@ const SingleProductPage = () => {
             <p>{formatPrice(price)}</p>
           </div>
           <div className='cta-container'>
-            <Link to='/cart'>
+            <Link to='/shippinginfo'>
               <button
                 className={countInStock === 0 ? 'disabled' : 'btn'}
                 onClick={() =>

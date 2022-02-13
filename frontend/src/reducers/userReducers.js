@@ -1,3 +1,4 @@
+import { USER_UPDATE_PROFILE_RESET } from '../actions';
 import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -29,25 +30,32 @@ import {
 const userReducer = (state, action) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
-      return { ...state, user_loading: true };
+      return { user_login_loading: true };
 
     case USER_LOGIN_SUCCESS:
-      return { ...state, user_loading: false, userInfo: action.payload };
+      return { user_login_loading: false, userInfo: action.payload };
 
     case USER_LOGIN_FAIL:
-      return { ...state, user_loading: false, user_error: action.payload };
+      return {
+        user_login_loading: false,
+        user_login_error: action.payload,
+      };
 
     case USER_LOGOUT:
       return {};
 
     case USER_REGISTER_REQUEST:
-      return { loading: true };
+      return { ...state, user_register_loading: true };
 
     case USER_REGISTER_SUCCESS:
-      return { loading: false, userInfo: action.payload };
+      return {
+        ...state,
+        user_register_loading: false,
+        userInfo: action.payload,
+      };
 
     case USER_REGISTER_FAIL:
-      return { loading: false, error: action.payload };
+      return { ...state, loading: false, user_register_error: action.payload };
 
     case USER_DETAILS_REQUEST:
       return { ...state, user_details_loading: true };
@@ -66,22 +74,24 @@ const userReducer = (state, action) => {
       return { ...state, user: {} };
 
     case USER_UPDATE_PROFILE_REQUEST:
-      return { ...state, user_update_loading: true };
+      return { ...state, user_update_profile_loading: true };
 
     case USER_UPDATE_PROFILE_SUCCESS:
       return {
         ...state,
-        user_update_loading: false,
-        user_update_success: true,
+        user_update_profile_loading: false,
+        user_update_profile_success: true,
         userInfo: action.payload,
       };
 
     case USER_UPDATE_PROFILE_FAIL:
       return {
         ...state,
-        user_update_loading: false,
-        user_update_error: action.payload,
+        user_update_profile_loading: false,
+        user_update_profile_error: action.payload,
       };
+    case USER_UPDATE_PROFILE_RESET:
+      return {};
 
     case USER_LIST_REQUEST:
       return { ...state, user_list_loading: true };

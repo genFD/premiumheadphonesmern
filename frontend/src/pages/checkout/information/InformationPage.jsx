@@ -46,7 +46,7 @@ const InformationPage = () => {
     });
   };
   if (success) {
-    Navigate('/payment');
+    Navigate('/confirmation');
   }
 
   const [showInfo, setShowInfo] = useState(false);
@@ -79,7 +79,7 @@ const InformationPage = () => {
       <div className='section-center shipping-center'>
         <div className='container-checkout-shipping-info'>
           <div className='shipping-info'>
-            <ShippingInfo />
+            {/* <ShippingInfo /> */}
             {error && <Message error='error'>There was an error</Message>}
             <button onClick={createOrderHandler} className='btn' type='submit'>
               Continue to payment

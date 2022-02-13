@@ -36,9 +36,9 @@ import {
 
 const initialState = {
   order: [],
-  order_loading: false,
-  order_success: false,
-  order_error: false,
+  order_create_loading: false,
+  order_create_success: false,
+  order_create_error: false,
   order_details_loading: false,
   order_details: {},
   order_pay_error: false,

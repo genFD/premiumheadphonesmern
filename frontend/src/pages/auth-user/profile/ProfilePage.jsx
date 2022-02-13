@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FaTimes, FaUserAstronaut } from 'react-icons/fa';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { animated, Transition } from 'react-spring';
 import styled from 'styled-components';
 import { assets } from '../../../assets/assets';
@@ -12,11 +12,14 @@ import { formatPrice } from '../../../utils/helpers';
 const ProfilePage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [isAdmin, setIsAdmin] = useState('');
   const [password, setPassword] = useState('');
+  const [toggleState, setToggleState] = useState(1);
   const [showProfileInfo, setShowProfileInfo] = useState(true);
   const [showOrdersInfo, setShowOrdersInfo] = useState(false);
 
+  const toggleTab = (index) => {
+    setToggleState(index);
+  };
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -25,34 +28,40 @@ const ProfilePage = () => {
   const {
     userInfo,
     user_details: user,
-    user_details_loading: loading,
-    user_details_error: error,
+    user_details_loading: loadingDetails,
+    user_details_error: errorDetails,
     getUserDetails,
     updateUserProfile,
-    user_update_success: success,
+    user_update_profile_success: success,
+    resetUserProfile,
   } = useUserContext();
 
   const {
     listMyOrders,
-    order_my_list_loading: loadingOrder,
+    order_my_list_loading: loadingOrders,
     order_my_list_error: errorOrders,
+    myorders: orders,
   } = useOrderContext();
 
   useEffect(() => {
     if (!userInfo) {
-      navigate('/login');
+      // navigate('/login');
     } else {
-      if (!user.name) {
+      if (!user || !user.name || success) {
+        // resetUserProfile();
         getUserDetails('profile');
         listMyOrders();
-      } else if (userInfo && location.pathname.includes('edit')) {
-        getUserDetails(id);
-      } else {
+      }
+      // else if (userInfo && location.pathname.includes('edit')) {
+      //   // getUserDetails(id);
+      //   getUserDetails('profile');
+      // }
+      else {
         setName(user.name);
         setEmail(user.email);
       }
     }
-  }, [userInfo, user]);
+  }, [userInfo, user, success]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -68,477 +77,397 @@ const ProfilePage = () => {
     setShowProfileInfo(false);
   };
 
-  return loading ? (
+  return loadingDetails ? (
     <Loader />
-  ) : error ? (
-    <Message className='error'>{error}</Message>
+  ) : errorDetails ? (
+    <Message className='error'>{errorDetails}</Message>
   ) : (
-    <>
-      <Wrapper>
-        <section className='lg-container'>
-          <article className='profile-container lg-screen'>
-            <header className='profile-container-header'>
-              <div className='img-container'>
-                <FaUserAstronaut size='100' className='profile-icon' />
-              </div>
-              <span>{user.name}</span>
-              <ul className='profile-option-list'>
-                <li
-                  onClick={viewProfileHandler}
-                  className='profile-option-link'>
-                  <span>Edit Public profile</span>
-                </li>
-                <li onClick={viewOrdersHandler} className='profile-option-link'>
-                  <span>View orders</span>
-                </li>
-              </ul>
-            </header>
-
-            <div className='profile-orders-container'>
-              {showProfileInfo && (
-                <TransitionProfileInfo
-                  submitHandler={submitHandler}
-                  name={name}
-                  setName={setName}
-                  email={email}
-                  setEmail={setEmail}
-                  password={password}
-                  setPassword={setPassword}
-                />
-              )}
-              {showOrdersInfo && <TransitionProfileOrders />}
-            </div>
-          </article>
-        </section>
-
-        <section className='sm-screen-profile-container  sm-screen'>
-          <header className='profile-container-header'>
-            <div className='img-container'>
-              <FaUserAstronaut size='50' className='profile-icon' />
-            </div>
-            {/* <span>{user.name}</span> */}
+    <Wrapper>
+      <section>
+        <div className='profile-container'>
+          <header className='bloc-tabs'>
+            <button
+              className={toggleState === 1 ? 'tabs active-tabs' : 'tabs'}
+              onClick={() => toggleTab(1)}>
+              Profile
+            </button>
+            <button
+              className={toggleState === 2 ? 'tabs active-tabs' : 'tabs'}
+              onClick={() => toggleTab(2)}>
+              Orders
+            </button>
           </header>
-          <div className='content-switch-btn-container'>
-            <button onClick={viewProfileHandler}>Edit Profile</button>
-            <button onClick={viewOrdersHandler}>Show Orders</button>
+          <div className='content-tabs'>
+            <div
+              className={
+                toggleState === 1 ? 'content  active-content' : 'content'
+              }>
+              <h2>Edit your profile</h2>
+              <hr />
+              <form>
+                <div className='form-control'>
+                  <input
+                    type='text'
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                  />
+                  <label>
+                    {assets.firstName.split('').map((letter, idx) => {
+                      return (
+                        <span
+                          key={idx}
+                          style={{ transitionDelay: `${idx * 50}ms` }}>
+                          {letter}
+                        </span>
+                      );
+                    })}
+                  </label>
+                </div>
+                <div className='form-control'>
+                  <input
+                    type='email'
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                  <label>
+                    {assets.email.split('').map((letter, idx) => {
+                      return (
+                        <span
+                          key={idx}
+                          style={{ transitionDelay: `${idx * 50}ms` }}>
+                          {letter}
+                        </span>
+                      );
+                    })}
+                  </label>
+                </div>
+                <div className='form-control'>
+                  <input
+                    type='password'
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <label>
+                    {assets.password.split('').map((letter, idx) => {
+                      return (
+                        <span
+                          key={idx}
+                          style={{ transitionDelay: `${idx * 50}ms` }}>
+                          {letter}
+                        </span>
+                      );
+                    })}
+                  </label>
+                </div>
+                <div className='btn-container'>
+                  <button className='btn'>Update</button>
+                </div>
+              </form>
+            </div>
+
+            <div
+              className={
+                toggleState === 2 ? 'content  active-content' : 'content'
+              }>
+              <h2>List of orders</h2>
+              <hr />
+              <div className='table-container'>
+                <table className='table'>
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>USER</th>
+                      <th>DATE</th>
+                      <th>TOTAL</th>
+                      <th>PAID</th>
+                      <th>DELIVERED</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {orders.map((order) => (
+                      <tr key={order._id}>
+                        <td data-label='ID'>{order._id}</td>
+                        <td>{order.user && order.user.name}</td>
+                        <td data-label='DATE'>
+                          {order.createdAt.substring(0, 10)}
+                        </td>
+
+                        <td data-label='TOTAL'>
+                          {formatPrice(order.totalPrice)}
+                        </td>
+                        <td data-label='PAID'>
+                          {order.isPaid ? (
+                            order.paidAt.substring(0, 10)
+                          ) : (
+                            <FaTimes style={{ color: 'red' }} />
+                          )}
+                        </td>
+                        <td data-label='DELIVERED'>
+                          {order.isDelivered ? (
+                            order.deliveredAt.substring(0, 10)
+                          ) : (
+                            <FaTimes style={{ color: 'red' }} />
+                          )}
+                        </td>
+                        <td>
+                          <Link to={`/order/${order._id}`}>
+                            <button className='small-btn'>Details</button>
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
-          {showProfileInfo && (
-            <TransitionProfileInfo
-              submitHandler={submitHandler}
-              name={name}
-              setName={setName}
-              email={email}
-              setEmail={setEmail}
-              password={password}
-              setPassword={setPassword}
-              success={success}
-            />
-          )}
-          {showOrdersInfo && <TransitionProfileOrders />}
-        </section>
-      </Wrapper>
-    </>
-  );
-};
-
-const TransitionProfileInfo = ({
-  submitHandler,
-  name,
-  setName,
-  email,
-  setEmail,
-  password,
-  setPassword,
-  success,
-}) => {
-  return (
-    <>
-      <Transition
-        items={ProfileInfo}
-        from={{ opacity: 0, translateX: -20 }}
-        enter={{ opacity: 1, translateX: 0 }}
-        leave={{ opacity: 0 }}
-        reverse={ProfileInfo}
-        delay={100}
-        // config={config.molasses}
-        // onRest={() => setShowInfo(!showInfo)}
-      >
-        {(styles, item) =>
-          item && (
-            <animated.div style={styles}>
-              <ProfileInfo
-                submitHandler={submitHandler}
-                name={name}
-                setName={setName}
-                email={email}
-                setEmail={setEmail}
-                password={password}
-                setPassword={setPassword}
-                success={success}
-              />
-            </animated.div>
-          )
-        }
-      </Transition>
-    </>
-  );
-};
-
-const TransitionProfileOrders = () => {
-  return (
-    <>
-      <Transition
-        items={ProfileOrders}
-        from={{ opacity: 0, translateX: 20 }}
-        enter={{ opacity: 1, translateX: 0 }}
-        leave={{ opacity: 0 }}
-        reverse={ProfileOrders}
-        delay={100}
-        // config={config.molasses}
-        // onRest={() => setShowInfo(!showInfo)}
-      >
-        {(styles, item) =>
-          item && (
-            <animated.div style={styles}>
-              <ProfileOrders />
-            </animated.div>
-          )
-        }
-      </Transition>
-    </>
-  );
-};
-
-const ProfileInfo = ({
-  submitHandler,
-  name,
-  setName,
-  email,
-  setEmail,
-  password,
-  setPassword,
-  success,
-}) => {
-  return (
-    <article className='profile-form-container'>
-      <header className='profile-form-container-header'>
-        <div className='header-content'>
-          <h3>Public profile</h3>
-          <p>Add information about yourself</p>
         </div>
-      </header>
-      <div className='form-container'>
-        <form onSubmit={submitHandler}>
-          <div className='form-control'>
-            <input
-              type='text'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-            <label>
-              {assets.firstName.split('').map((letter, idx) => {
-                return (
-                  <span key={idx} style={{ transitionDelay: `${idx * 50}ms` }}>
-                    {letter}
-                  </span>
-                );
-              })}
-            </label>
-          </div>
-
-          <div className='form-control'>
-            <input
-              type='email'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <label>
-              {assets.email.split('').map((letter, idx) => {
-                return (
-                  <span key={idx} style={{ transitionDelay: `${idx * 50}ms` }}>
-                    {letter}
-                  </span>
-                );
-              })}
-            </label>
-          </div>
-          <div className='form-control'>
-            <input
-              type='password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <label>
-              {assets.password.split('').map((letter, idx) => {
-                return (
-                  <span key={idx} style={{ transitionDelay: `${idx * 50}ms` }}>
-                    {letter}
-                  </span>
-                );
-              })}
-            </label>
-          </div>
-          <div className='btn-container'>
-            <button className='btn'>Save</button>
-          </div>
-        </form>
-      </div>
-      {success && (
-        <Message success='success'>
-          Profile Updated! <br /> Please reload the page ...
-        </Message>
-      )}
-    </article>
-  );
-};
-const ProfileOrders = () => {
-  const {
-    myorders: orders,
-    order_my_list_loading: loading,
-    order_my_list_error: error,
-  } = useOrderContext();
-
-  return (
-    <article className='profile-form-container'>
-      <header className='profile-form-container-header'>
-        <div className='header-content'>
-          <h3>Orders</h3>
-          <p>This is your orders</p>
-        </div>
-      </header>
-      {loading ? (
-        <Loader />
-      ) : error ? (
-        <Message error='error'>There was an error</Message>
-      ) : (
-        <div className='form-container'>
-          <ul className='sm-screen-orders-content'>
-            {orders.map((order) => {
-              return (
-                <li key={order._id}>
-                  <article className='order-content'>
-                    <p>Id:{order._id}</p>
-                    <p>Created on: {order.createdAt.substring(0, 10)}</p>
-                    <p>Amount: {formatPrice(order.totalPrice)}</p>
-                    <p>
-                      Paid on:
-                      {order.isPaid ? (
-                        order.paidAt.substring(0, 10)
-                      ) : (
-                        <FaTimes style={{ color: 'red' }} />
-                      )}
-                    </p>
-                    <p>
-                      Delivered:
-                      {order.isDelivered
-                        ? order.deliveredAt.substring(0, 10)
-                        : '  No'}
-                    </p>
-                  </article>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      )}
-    </article>
+      </section>
+    </Wrapper>
   );
 };
 
 export const Wrapper = styled.section`
-  height: calc(100vh + 12rem);
-  display: flex;
-  justify-content: center;
-
-  /* background: red; */
-  /* align-items: center; */
-
-  .lg-screen {
-    display: none;
-  }
-
-  .sm-screen-profile-container {
-    margin-top: 6rem;
-    height: auto;
-    width: 90vw;
-    border: 1px solid var(--dark-slate);
-    min-width: 350px;
-    margin-bottom: 2rem;
-  }
-  .profile-option-list {
-    display: none;
-  }
-
-  p {
-    margin: 0;
-  }
-
-  .img-container {
-    width: auto;
-    height: auto;
-    border-radius: 50%;
-    padding: 1rem;
-    background: var(--light-navy);
-  }
-
-  .profile-icon {
-    color: var(--green);
-  }
-
-  .profile-container-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    padding-top: 0.5rem;
-  }
-
-  .content-switch-btn-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-  .content-switch-btn-container button {
-    padding: 1rem 1.5rem;
-    background: var(--light-navy);
-    color: var(--slate);
-    border: transparent;
-    cursor: pointer;
-    transition: var(--transition);
-    font-family: var(--bodyFont);
-    font-size: 16px;
-  }
-
-  .content-switch-btn-container button:focus {
-    background: var(--lightest-navy);
-    color: var(--green);
-    border-bottom: 1px solid var(--green);
-  }
-
-  .profile-form-container-header {
-    border: 1px solid var(--dark-slate);
-    height: auto;
-    width: 100%;
+  section {
+    height: calc(100vh + 5rem);
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1rem;
+    padding: 0 3rem;
+    margin-bottom: 2rem;
   }
 
-  .header-content {
+  .profile-container {
     display: flex;
     flex-direction: column;
+    position: relative;
+    width: 800px;
+    min-width: 400px;
+    height: 600px;
+    height: 70%;
+    background: var(--light-navy);
+    margin: 50px auto 0;
+    word-break: break-all;
+    border: 1px solid rgba(0, 0, 0, 0.274);
   }
 
-  header h3 {
+  .bloc-tabs {
+    display: flex;
+  }
+  .tabs {
+    padding: 15px;
     text-align: center;
-    margin: 0;
+    width: 50%;
+    background: rgba(128, 128, 128, 0.075);
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.274);
+    box-sizing: content-box;
+    position: relative;
+    outline: none;
+    color: var(--white);
+    font-family: var(--bodyFont);
+  }
+  .tabs:not(:last-child) {
+    border-right: 1px solid rgba(0, 0, 0, 0.274);
   }
 
-  //orders
-  .sm-screen-orders-content {
-    display: flex;
-    flex-direction: column;
-    /* *** footer push */
-    margin-bottom: 10rem;
+  .active-tabs {
+    background: var(--navy);
+    border-bottom: 1px solid transparent;
   }
 
-  .order-content {
-    padding: 1rem 1.5rem;
-    transition: var(--transition);
-    border: 1px solid var(--green);
+  .active-tabs::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% + 2px);
+    height: 5px;
+    background: var(--green);
   }
-
-  //edit profile
-  .profile-form-container {
-    padding: 1rem;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-4);
-    margin-top: 2rem;
+  button {
+    border: none;
   }
-
-  .form-container {
+  .content-tabs {
+    flex-grow: 1;
+  }
+  .content {
+    background: var(--light-navy);
+    padding: 20px;
     width: 100%;
-    padding: 1rem;
+    height: 100%;
+    display: none;
   }
-  .form-container input {
+  .content h2 {
+    padding: 0px 0 5px 0px;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 1rem;
+  }
+  .content hr {
+    width: 100%;
+    height: 2px;
+    background: #222;
+    margin-bottom: 25px;
+    display: none;
+  }
+  .content p {
+    width: 100%;
+    height: 100%;
+  }
+  .active-content {
+    display: block;
+  }
+  form {
+    /* flex-wrap: wrap; */
+  }
+  .form-control {
+    position: relative;
+    margin: 40px 40px;
+    width: 300px;
+  }
+  .form-control input {
     background-color: transparent;
     border: 0;
-    border-bottom: 1px var(--dark-slate) solid;
+    border-bottom: 2px var(--slate) solid;
     display: block;
     width: 100%;
     padding: 15px 0;
     font-size: 14px;
     font-family: inherit;
     color: #fff;
+    margin-bottom: 60px;
+  }
+  .form-control input:focus,
+  .form-control input:valid {
+    outline: 0;
+    border-bottom-color: var(--green);
   }
 
-  @media (min-width: 768px) {
-    .lg-screen {
-      display: block;
+  .form-control label {
+    position: absolute;
+    top: 15px;
+    left: 0;
+  }
+  .form-control label span {
+    display: inline-block;
+    font-size: 18px;
+    min-width: 5px;
+    transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  .form-control input:focus + label span,
+  .form-control input:valid + label span {
+    color: var(--green);
+    transform: translateY(-30px);
+  }
+  .btn {
+    cursor: pointer;
+    display: inline-block;
+    width: 100%;
+    background-color: var(--lightest-navy);
+    padding: 15px;
+    font-family: inherit;
+    font-size: 1rem;
+    border: 0;
+    border-radius: var(--radius);
+    color: #fff;
+  }
+  .btn:hover {
+    background-color: var(--green);
+    color: var(--dark-navy);
+  }
+  .btn-container {
+    width: 80%;
+    margin: 0 auto;
+  }
+  .btn:focus {
+    outline: 0;
+  }
+  .btn:active {
+    transform: scale(0.98);
+  }
+  @media screen and (max-width: 600px) {
+    .form-control {
+      width: 90%;
     }
-    .sm-screen-profile-container {
+    .form-control input {
+      width: 80%;
+    }
+  }
+  .table-container {
+    /* padding: 0 10%; */
+    /* border: 1px solid red; */
+  }
+  .table {
+    border: 1px solid lightblue;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .table thead {
+    background: var(--dark-navy);
+  }
+  .table thead tr th {
+    font-size: 0.75rem;
+    padding: 12px;
+    vertical-align: top;
+    opacity: 1;
+    letter-spacing: 0.35px;
+    border: 2px solid var(--lightest-navy);
+  }
+  .table tbody tr td {
+    font-size: 0.75rem;
+    padding: 8px;
+    text-align: center;
+    border: 1px solid var(--lightest-navy);
+  }
+  .table tbody tr td .small-btn {
+    width: 80px;
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    color: var(--green);
+    border: 1px solid var(--green);
+    background: var(--dark-navy);
+    border-radius: var(--bradius);
+    cursor: pointer;
+    opacity: 1;
+  }
+  @media (max-width: 768px) {
+    .table thead {
       display: none;
     }
-    .lg-container {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .profile-container-header {
-      border: 1px solid var(--dark-slate);
-    }
-    .sm-screen-orders-content {
-      flex-direction: row;
-    }
-
-    .profile-orders-container {
+    .table,
+    .table tbody,
+    .table tr,
+    .table td {
+      display: block;
       width: 100%;
     }
-
-    .profile-option-list {
-      display: block;
-      margin-top: 2rem;
+    .table tr {
+      margin-bottom: 15px;
     }
-    .profile-form-container {
-      width: 100%;
+    .table tbody tr td {
+      text-align: right;
+      padding-left: 50%;
     }
-    .sm-screen-orders-content {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    }
-
-    .profile-option-link {
-      display: block;
+    .table td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 0;
+      width: 50%;
+      padding-left: 35px;
+      font-weight: 600;
+      font-size: 14px;
       text-align: left;
-      font-size: 1rem;
-      text-transform: capitalize;
-      padding: 1rem 1.5rem;
-      transition: var(--transition);
-      letter-spacing: var(--spacing);
-      font-family: var(--bodyFont);
-      color: var(--slate);
-      cursor: pointer;
-    }
-
-    .profile-option-link:hover {
-      padding: 1rem 1.5rem;
-      padding-left: 2rem;
-      background: var(--dark-navy);
-      color: var(--green);
-      border-left: 1px solid var(--green);
-    }
-
-    .profile-container {
-      margin-top: 6rem;
-      height: auto;
-      width: 75vw;
-      display: grid;
-      grid-template-columns: 250px auto;
-      border: 1px solid var(--dark-slate);
     }
   }
 `;

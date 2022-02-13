@@ -16,8 +16,8 @@ const RegisterPage = () => {
   const navigate = useNavigate();
 
   const {
-    user_loading: loading,
-    user_error: error,
+    user_register_loading: loading,
+    user_register_error: error,
     userInfo,
     register,
   } = useUserContext();
@@ -167,7 +167,7 @@ const Wrapper = styled.div`
     cursor: pointer;
     display: inline-block;
     width: 100%;
-    background-color: var(--slate);
+    background-color: var(--navy);
     padding: 15px;
     font-family: inherit;
     font-size: 1rem;

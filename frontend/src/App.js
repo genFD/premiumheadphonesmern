@@ -17,6 +17,7 @@ import {
   ProductEdit,
   Products,
   Orders,
+  ShippingInfo,
 } from './pages';
 
 import { Footer, Navbar } from './components';
@@ -30,8 +31,8 @@ function App() {
       <Routes>
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
-        <Route path='/profile/' element={<Profile />} />
         <Route path='/' element={<Home />} />
+        <Route path='/profile/' element={<Profile />} />
         <Route path='/products' element={<ProductsList />} />
         <Route path='/admin/users' element={<Users />} />
         <Route path='/admin/orders' element={<Orders />} />
@@ -41,7 +42,8 @@ function App() {
 
         <Route path='/about' element={<About />} />
         <Route path='/products/:id' element={<SingleProduct />} />
-        <Route path='/cart/*' element={<ShippingInformation />} />
+        {/* <Route path='/cart' element={<ShippingInformation />} /> */}
+        <Route path='/shippinginfo' element={<ShippingInfo />} />
         <Route path='/payment' element={<Payment />} />
         <Route path='/confirmation/:id' element={<OrderConfirmation />} />
         <Route path='*' element={<Error />} />

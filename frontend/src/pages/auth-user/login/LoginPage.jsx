@@ -15,8 +15,8 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const {
-    user_loading: loading,
-    user_error: error,
+    user_login_loading: loading,
+    user_login_error: error,
     userInfo,
     login,
   } = useUserContext();
@@ -26,10 +26,9 @@ const LoginPage = () => {
   useEffect(() => {
     hideNavBar();
     if (userInfo) {
-      // history.push(redirect);
       navigate(redirect);
     }
-  }, [navigate, userInfo]);
+  }, [userInfo, redirect]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -90,7 +89,7 @@ const LoginPage = () => {
             <p className='text'>
               Don't have an account?
               <Link
-                to={redirect ? `/register?redirect=${redirect}` : '/redirect'}
+                to={redirect ? `/register?redirect=${redirect}` : '/register'}
                 style={{
                   color: '#ffff',
                   textDecoration: 'none',
@@ -148,7 +147,7 @@ const Wrapper = styled.div`
     cursor: pointer;
     display: inline-block;
     width: 100%;
-    background-color: var(--slate);
+    background-color: var(--navy);
     padding: 15px;
     font-family: inherit;
     font-size: 1rem;

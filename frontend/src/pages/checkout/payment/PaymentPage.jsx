@@ -15,12 +15,14 @@ import styled from 'styled-components';
 import { useCartContext } from '../../../context/cart_context';
 import { useOrderContext } from '../../../context/order_context';
 import axios from 'axios';
+import { formatPrice } from '../../../utils/helpers';
 
 const PaymentPage = () => {
   const [showInfo, setShowInfo] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('PayPal');
   const [sdkReady, setSdkReady] = useState(false);
 
+  const navigate = useNavigate();
   let w = window.innerWidth;
   const orderDisplayer = () => {
     if (w >= 768) {
@@ -44,25 +46,41 @@ const PaymentPage = () => {
     orderDisplayer();
   });
 
-  const { shippingAddress } = useCartContext();
+  const { shippingAddress, cart, total_amount, shipping, taxes, clearCart } =
+    useCartContext();
   const {
     order,
-    order_error: error,
+    order_create_error: error,
     order_pay_loading: loadingPay,
     order_pay_success: successPay,
     payOrder,
     payReset,
+    createOrder,
+
+    order_create_success: success,
   } = useOrderContext();
 
-  const navigate = useNavigate();
+  const totalPrice = total_amount + shipping + taxes;
+
+  const createOrderHandler = () => {
+    createOrder({
+      orderItems: cart,
+      shippingAddress,
+      itemsPrice: total_amount,
+      shippingPrice: shipping,
+      taxPrice: taxes,
+      totalPrice: totalPrice,
+    });
+    clearCart();
+  };
+  if (success) {
+    navigate(`/confirmation/${order._id}`);
+  }
 
   if (!shippingAddress) {
     navigate('/shipping');
   }
   useEffect(() => {
-    if (order.length === 0) {
-      navigate('/cart');
-    }
     const addPayPalScript = async () => {
       const { data: clientId } = await axios.get('/api/config/paypal');
       const script = document.createElement('script');
@@ -85,7 +103,7 @@ const PaymentPage = () => {
         setSdkReady(true);
       }
     }
-  }, [order, successPay, order._id]);
+  }, [order, successPay, success, order._id]);
 
   const successPaymentHandler = (paymentResult) => {
     payOrder(order._id, paymentResult);
@@ -93,9 +111,7 @@ const PaymentPage = () => {
 
   return (
     <Wrapper>
-      <Link to='/cart'>
-        <BackButton />
-      </Link>
+      <BackButton />
       <div className='section-center shipping-center'>
         <div className='container-checkout-shipping-info'>
           <InfoSummary />
@@ -105,15 +121,14 @@ const PaymentPage = () => {
               <Loader />
             ) : (
               <PayPalButton
-                amount={order.totalPrice}
+                amount={formatPrice(order.totalPrice)}
                 onSuccess={successPaymentHandler}
               />
             )}
+            <button onClick={createOrderHandler} className='btn'>
+              Pay now
+            </button>
           </div>
-
-          {/* <button onClick={submitHandler} className='btn' type='submit'>
-            Pay now
-          </button> */}
         </div>
         <button
           className={`showinfo ${showInfo ? 'showinfotrue' : 'showinfofalse'}`}

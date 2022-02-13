@@ -25,13 +25,13 @@ import {
 const orderReducer = (state, action) => {
   switch (action.type) {
     case ORDER_CREATE_REQUEST:
-      return { ...state, order_loading: true };
+      return { ...state, order_create_loading: true };
 
     case ORDER_CREATE_SUCCESS:
       return {
         ...state,
-        order_loading: false,
-        order_success: true,
+        order_create_loading: false,
+        order_create_success: true,
         order: action.payload,
       };
 

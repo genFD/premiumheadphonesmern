@@ -14,9 +14,11 @@ import UserEdit from './admin/userEdit/UserEditPage';
 import ProductEdit from './admin/productEdit/ProductEditPage';
 import Products from './admin/productsList/ProductsList';
 import Orders from './admin/ordersList/OrdersList';
+import ShippingInfo from './checkout/shippingInfo/ShippingInfo';
 export {
   Home,
   SingleProduct,
+  ShippingInfo,
   ShippingInformation,
   OrderConfirmation,
   Payment,

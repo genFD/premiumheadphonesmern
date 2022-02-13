@@ -9,7 +9,6 @@ import FeaturedProducts from './featureProducts/FeaturedProducts';
 import Contact from './Contact/Contacts';
 import Card from './productcard/Card';
 import ExpressCheckOut from './expressCheckout/ExpressCheckout';
-import ShippingInfo from './shippingInfo/ShippingInfo';
 import InfoSummary from './informationSummary/InfoSummary';
 import Message from './message/Message';
 import Loader from './loader/Loader';
@@ -39,7 +38,6 @@ export {
   Contact,
   Card,
   ExpressCheckOut,
-  ShippingInfo,
   InfoSummary,
   Message,
   Loader,
