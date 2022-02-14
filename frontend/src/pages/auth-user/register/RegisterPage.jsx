@@ -11,6 +11,8 @@ const RegisterPage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [message, setMessage] = useState(null);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -24,6 +26,7 @@ const RegisterPage = () => {
 
   const redirect = location.search ? location.search.split('=')[1] : '/';
   const { hideNavBar } = useProductsContext();
+
   useEffect(() => {
     hideNavBar();
     if (userInfo) {
@@ -33,7 +36,9 @@ const RegisterPage = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    register(name, email, password);
+    password !== confirmPassword
+      ? setMessage('Passwords do not match')
+      : register(name, email, password);
   };
 
   return (
@@ -41,6 +46,7 @@ const RegisterPage = () => {
       <div className='login-container'>
         <div className='form-container'>
           <h1>Register</h1>
+          {message && <Message error='error'>{message}</Message>}
           {error && <Message error='error'>{error}</Message>}
           {loading && <Loader />}
           <form onSubmit={submitHandler}>
@@ -92,6 +98,26 @@ const RegisterPage = () => {
               />
               <label>
                 {assets.password.split('').map((letter, idx) => {
+                  return (
+                    <span
+                      key={idx}
+                      style={{ transitionDelay: `${idx * 50}ms` }}>
+                      {letter}
+                    </span>
+                  );
+                })}
+              </label>
+            </div>
+
+            <div className='form-control'>
+              <input
+                type='password'
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+              <label>
+                {assets.confirmPass.split('').map((letter, idx) => {
                   return (
                     <span
                       key={idx}

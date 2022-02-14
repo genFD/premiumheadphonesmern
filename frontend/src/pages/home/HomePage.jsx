@@ -3,12 +3,15 @@ import { useProductsContext } from '../../context/products_context';
 import './homepage.css';
 import { Contact, FeaturedProducts, Hero, Services } from '../../components';
 import { animated, Transition } from 'react-spring';
+import { useUserContext } from '../../context/user_context';
 
 const HomePage = () => {
   const { showNavBar } = useProductsContext();
+  const { getUserDetails, user } = useUserContext();
   useEffect(() => {
     showNavBar();
-  }, []);
+    getUserDetails('profile');
+  }, [user]);
 
   return (
     <>

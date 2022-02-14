@@ -35,24 +35,13 @@ import {
 // };
 
 const initialState = {
-  order: [],
-  order_create_loading: false,
-  order_create_success: false,
-  order_create_error: false,
-  order_details_loading: false,
-  order_details: {},
-  order_pay_error: false,
-  order_pay_loading: false,
-  order_pay_success: false,
-  order_deliver_error: false,
-  order_deliver_loading: false,
-  order_deliver_success: false,
-  order_my_list_loading: false,
-  myorders: [],
-  order_my_list_error: false,
-  order_list_loading: false,
-  orders: [],
-  order_list_error: false,
+  order: {},
+  loading: false,
+  success: false,
+  error: false,
+  orderItems: [],
+  shippingAddress: {},
+  myOrders: [],
 };
 
 const OrderContext = React.createContext();
@@ -69,7 +58,7 @@ export const OrderProvider = ({ children }) => {
 
       const config = {
         headers: {
-          'content-Type': 'application/json',
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
@@ -88,6 +77,7 @@ export const OrderProvider = ({ children }) => {
       });
     }
   };
+
   const getOrderDetails = async (id) => {
     try {
       dispatch({
@@ -121,7 +111,6 @@ export const OrderProvider = ({ children }) => {
       dispatch({
         type: ORDER_PAY_REQUEST,
       });
-
       const config = {
         'Content-Type': 'application/json',
         headers: {
@@ -148,6 +137,7 @@ export const OrderProvider = ({ children }) => {
       });
     }
   };
+
   const payReset = () => {
     dispatch({
       type: ORDER_PAY_RESET,

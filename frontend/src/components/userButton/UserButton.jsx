@@ -67,8 +67,8 @@ const DropDown = ({ setDropDown }) => {
   return (
     <DropDownWrapper>
       <article>
-        <Link onClick={() => setDropDown(false)} to='/profile'>
-          <span>Profile</span>
+        <Link to={`/profile`}>
+          <span onClick={() => setDropDown(false)}>Profile</span>
         </Link>
         {userInfo && userInfo.isAdmin && (
           <>
@@ -136,7 +136,7 @@ const Wrapper = styled.div`
     /* border: 1px solid red; */
     position: absolute;
     top: -10px;
-    right: -45px;
+    right: -35px;
     background: var(--clr-primary-5);
     width: auto;
     height: 16px;

@@ -37,6 +37,7 @@ const PaymentPage = () => {
       setShowInfo(true);
     }
   };
+
   useEffect(() => {
     localStorage.setItem('showinfo', showInfo);
     getLocalStorage();
@@ -48,21 +49,11 @@ const PaymentPage = () => {
 
   const { shippingAddress, cart, total_amount, shipping, taxes, clearCart } =
     useCartContext();
-  const {
-    order,
-    order_create_error: error,
-    order_pay_loading: loadingPay,
-    order_pay_success: successPay,
-    payOrder,
-    payReset,
-    createOrder,
-
-    order_create_success: success,
-  } = useOrderContext();
+  const { order, success, createOrder, payOrder } = useOrderContext();
 
   const totalPrice = total_amount + shipping + taxes;
 
-  const createOrderHandler = () => {
+  const placeOrderHandler = () => {
     createOrder({
       orderItems: cart,
       shippingAddress,
@@ -71,6 +62,7 @@ const PaymentPage = () => {
       taxPrice: taxes,
       totalPrice: totalPrice,
     });
+    payOrder();
     clearCart();
   };
   if (success) {
@@ -80,34 +72,6 @@ const PaymentPage = () => {
   if (!shippingAddress) {
     navigate('/shipping');
   }
-  useEffect(() => {
-    const addPayPalScript = async () => {
-      const { data: clientId } = await axios.get('/api/config/paypal');
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
-
-      script.async = true;
-      script.onload = () => {
-        setSdkReady(true);
-      };
-      document.body.appendChild(script);
-    };
-
-    if (successPay) {
-      navigate(`/confirmation/${order._id}`);
-    } else if (!order.isPaid) {
-      if (!window.paypal) {
-        addPayPalScript();
-      } else {
-        setSdkReady(true);
-      }
-    }
-  }, [order, successPay, success, order._id]);
-
-  const successPaymentHandler = (paymentResult) => {
-    payOrder(order._id, paymentResult);
-  };
 
   return (
     <Wrapper>
@@ -116,7 +80,7 @@ const PaymentPage = () => {
         <div className='container-checkout-shipping-info'>
           <InfoSummary />
           <div className='shipping-info'>
-            {loadingPay && <Loader />}
+            {/* {loading && <Loader />}
             {!sdkReady ? (
               <Loader />
             ) : (
@@ -125,7 +89,8 @@ const PaymentPage = () => {
                 onSuccess={successPaymentHandler}
               />
             )}
-            <button onClick={createOrderHandler} className='btn'>
+            {error && <Message error='error'>{error}</Message>} */}
+            <button onClick={placeOrderHandler} className='btn'>
               Pay now
             </button>
           </div>

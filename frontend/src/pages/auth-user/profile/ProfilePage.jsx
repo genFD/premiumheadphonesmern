@@ -13,26 +13,23 @@ const ProfilePage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [message, setMessage] = useState(null);
   const [toggleState, setToggleState] = useState(1);
-  const [showProfileInfo, setShowProfileInfo] = useState(true);
-  const [showOrdersInfo, setShowOrdersInfo] = useState(false);
 
   const toggleTab = (index) => {
     setToggleState(index);
   };
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const { id } = useParams();
 
   const {
     userInfo,
-    user_details: user,
-    user_details_loading: loadingDetails,
-    user_details_error: errorDetails,
+    user,
+    loading,
+    error,
     getUserDetails,
     updateUserProfile,
-    user_update_profile_success: success,
+    success,
     resetUserProfile,
   } = useUserContext();
 
@@ -45,43 +42,25 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (!userInfo) {
-      // navigate('/login');
+      navigate('/login');
+    } else if (!user.name) {
+      getUserDetails('profile');
+      //  listMyOrders();
     } else {
-      if (!user || !user.name || success) {
-        // resetUserProfile();
-        getUserDetails('profile');
-        listMyOrders();
-      }
-      // else if (userInfo && location.pathname.includes('edit')) {
-      //   // getUserDetails(id);
-      //   getUserDetails('profile');
-      // }
-      else {
-        setName(user.name);
-        setEmail(user.email);
-      }
+      setName(user.name);
+      setEmail(user.email);
     }
-  }, [userInfo, user, success]);
+  }, [userInfo, user]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    updateUserProfile({ id: user._id, name, email, password });
+    password !== confirmPassword
+      ? setMessage('Passwords do not match')
+      : updateUserProfile(
+          updateUserProfile({ id: user._id, name, email, password })
+        );
   };
-
-  const viewProfileHandler = () => {
-    setShowProfileInfo(true);
-    setShowOrdersInfo(false);
-  };
-  const viewOrdersHandler = () => {
-    setShowOrdersInfo(true);
-    setShowProfileInfo(false);
-  };
-
-  return loadingDetails ? (
-    <Loader />
-  ) : errorDetails ? (
-    <Message className='error'>{errorDetails}</Message>
-  ) : (
+  return (
     <Wrapper>
       <section>
         <div className='profile-container'>
@@ -97,6 +76,10 @@ const ProfilePage = () => {
               Orders
             </button>
           </header>
+          {loading && <Loader />}
+          {error && <Message error='error'>{error.message}</Message>}
+          {message && <Message error='error'>{message}</Message>}
+          {success && <Message success='success'>"Profile updated"</Message>}
           <div className='content-tabs'>
             <div
               className={
@@ -104,7 +87,7 @@ const ProfilePage = () => {
               }>
               <h2>Edit your profile</h2>
               <hr />
-              <form>
+              <form onSubmit={submitHandler}>
                 <div className='form-control'>
                   <input
                     type='text'
@@ -152,6 +135,25 @@ const ProfilePage = () => {
                   />
                   <label>
                     {assets.password.split('').map((letter, idx) => {
+                      return (
+                        <span
+                          key={idx}
+                          style={{ transitionDelay: `${idx * 50}ms` }}>
+                          {letter}
+                        </span>
+                      );
+                    })}
+                  </label>
+                </div>
+                <div className='form-control'>
+                  <input
+                    type='password'
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                  />
+                  <label>
+                    {assets.confirmPass.split('').map((letter, idx) => {
                       return (
                         <span
                           key={idx}

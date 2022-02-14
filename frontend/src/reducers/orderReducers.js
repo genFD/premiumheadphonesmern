@@ -25,46 +25,43 @@ import {
 const orderReducer = (state, action) => {
   switch (action.type) {
     case ORDER_CREATE_REQUEST:
-      return { ...state, order_create_loading: true };
+      return { loading: true };
 
     case ORDER_CREATE_SUCCESS:
       return {
-        ...state,
-        order_create_loading: false,
-        order_create_success: true,
+        loading: false,
+        success: true,
         order: action.payload,
       };
 
     case ORDER_CREATE_FAIL:
-      return { ...state, order_loading: false, order_error: action.payload };
+      return { loading: false, error: action.payload };
 
     case ORDER_DETAILS_REQUEST:
-      return { ...state, order_details_loading: true };
+      return { ...state, loading: true };
 
     case ORDER_DETAILS_SUCCESS:
       return {
-        ...state,
-        order_details_loading: false,
-        order_details: action.payload,
+        loading: false,
+        order: action.payload,
       };
 
     case ORDER_DETAILS_FAIL:
       return {
-        ...state,
-        order_details_loading: false,
-        order_details_error: action.payload,
+        loading: false,
+        error: action.payload,
       };
+
     case ORDER_PAY_REQUEST:
-      return { ...state, order_pay_loading: true };
+      return { loading: true };
 
     case ORDER_PAY_SUCCESS:
-      return { ...state, order_pay_loading: false, order_pay_success: true };
+      return { loading: false, success: true };
 
     case ORDER_PAY_FAIL:
       return {
-        ...state,
-        order_pay_loading: false,
-        order_pay_error: action.payload,
+        loading: false,
+        error: action.payload,
       };
 
     case ORDER_PAY_RESET:

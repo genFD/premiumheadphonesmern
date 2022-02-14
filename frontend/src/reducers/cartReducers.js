@@ -72,6 +72,7 @@ const cartReducer = (state, action) => {
         total_items,
         total_amount,
       };
+
     case CART_SAVE_SHIPPING_ADDRESS:
       return {
         ...state,

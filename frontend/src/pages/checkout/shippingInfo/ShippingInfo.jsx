@@ -166,22 +166,18 @@ const Wrapper = styled.div`
   .form-control {
     position: relative;
     margin: 40px 0;
-    /* width: 100%; */
-    /* border: 1px solid red; */
   }
   .form-control input {
-    background-color: var(--light-navy);
-    /* border: 0; */
-    border: 1px solid var(--light-navy);
-    /* border-right: 2px #64ffda solid;
-  border-left: 2px #64ffda solid;
-  border-bottom: 2px #64ffda solid; */
+    background-color: transparent;
+    border: 0;
+    border-bottom: 2px var(--slate) solid;
     display: block;
     width: 100%;
     padding: 15px 0;
     font-size: 14px;
     font-family: inherit;
     color: #fff;
+    margin-bottom: 60px;
   }
   .form-control input:focus,
   .form-control input:valid {
@@ -196,14 +192,14 @@ const Wrapper = styled.div`
   }
   .form-control label span {
     display: inline-block;
-    font-size: 1rem;
+    font-size: 18px;
     min-width: 5px;
     transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
   .form-control input:focus + label span,
   .form-control input:valid + label span {
     color: var(--green);
-    transform: translateY(-40px);
+    transform: translateY(-30px);
   }
 `;
 

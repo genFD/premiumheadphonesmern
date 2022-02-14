@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useCartContext } from '../../context/cart_context';
 import './infoSummary.css';
 
 const InfoSummary = () => {
+  const location = useLocation();
   const { shippingAddress } = useCartContext();
   const navigate = useNavigate();
   return (
@@ -12,7 +13,9 @@ const InfoSummary = () => {
         <div className='info-summary contact'>
           <div className='info-summary-header'>
             <p className='info-summary-title'>Contact</p>
-            <button onClick={() => navigate(-1)}>Change</button>
+            <button onClick={() => navigate(-1)}>
+              {location.pathname.includes('confirmation') ? '' : 'change'}
+            </button>
           </div>
           <p>{shippingAddress.email}</p>
         </div>
@@ -22,7 +25,9 @@ const InfoSummary = () => {
         <div className='info-summary ship'>
           <div className='info-summary-header'>
             <p className='info-summary-title'>Ship to</p>
-            <button onClick={() => navigate(-1)}>Change</button>
+            <button onClick={() => navigate(-1)}>
+              {location.pathname.includes('confirmation') ? '' : 'change'}
+            </button>
           </div>
           <p>
             {shippingAddress.address}

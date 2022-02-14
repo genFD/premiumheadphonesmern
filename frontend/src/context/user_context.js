@@ -40,23 +40,11 @@ const userInfoFromStorage = localStorage.getItem('userInfo')
 
 const initialState = {
   userInfo: userInfoFromStorage,
-  user_login_loading: false,
-  user_login_error: false,
-  user_register_loading: false,
-  user_register_error: false,
-  user_details: {},
-  user_details_loading: false,
-  user_details_error: false,
-  user_update_profile_loading: false,
-  user_update_profile_success: false,
-  user_update_profile_error: false,
-  user_list_loading: false,
-  users_list: [],
-  user_list_error: false,
-  user_delete_loading: false,
-  user_delete_success: false,
-  user_delete_error: false,
+  loading: false,
+  error: false,
+  success: false,
   user: {},
+  users: [],
 };
 const UserContext = React.createContext();
 
@@ -140,6 +128,7 @@ export const UserProvider = ({ children }) => {
     dispatch({
       type: USER_LOGOUT,
     });
+    // localStorage.removeItem('shippingAddress');
     // dispatch({
     //   type: USER_DETAILS_RESET,
     // });
@@ -162,6 +151,7 @@ export const UserProvider = ({ children }) => {
         },
       };
       const { data } = await axios.get(`/api/users/${id}`, config);
+
       dispatch({
         type: USER_DETAILS_SUCCESS,
         payload: data,
@@ -179,6 +169,9 @@ export const UserProvider = ({ children }) => {
 
   const updateUserProfile = async (user) => {
     try {
+      dispatch({
+        type: USER_UPDATE_PROFILE_RESET,
+      });
       dispatch({
         type: USER_UPDATE_PROFILE_REQUEST,
       });

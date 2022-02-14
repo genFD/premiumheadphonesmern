@@ -35,21 +35,15 @@ const OrderConfirmationPage = () => {
     orderDisplayer();
   });
   const { id } = useParams();
-  const { clearCart } = useCartContext();
-  const {
-    order_details_loading: loading,
-    order_details_error: error,
-    order,
-    order_details: details,
-    getOrderDetails,
-    payReset,
-  } = useOrderContext();
+  const { loading, error, order, getOrderDetails, payReset } =
+    useOrderContext();
   const { userInfo } = useUserContext();
 
   useEffect(() => {
     getOrderDetails(id);
     payReset();
   }, []);
+
   return loading ? (
     <Loader />
   ) : error ? (
